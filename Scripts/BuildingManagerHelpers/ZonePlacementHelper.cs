@@ -32,7 +32,11 @@ public class ZonePlacementHelper : StructureModificationHelper
 
     private void PlaceNewZoneUpTo(Vector3 endPosition)
     {
-        
+        Vector3Int minPoint = Vector3Int.FloorToInt(startPosition);
+        Vector3Int maxPoint = Vector3Int.FloorToInt(endPosition);
+
+        ZoneCalculator.PrepareStartAndEndPosition(startPosition, endPosition, ref minPoint, ref maxPoint, mapBottomLeftCorner);
+
 
     }
 
