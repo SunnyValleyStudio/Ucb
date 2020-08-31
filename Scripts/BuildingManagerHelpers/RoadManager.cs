@@ -7,23 +7,37 @@ public static class RoadManager
 {
     public static int GetRoadNeighboursStatus(Vector3 gridPosition, GridStructure grid, Dictionary<Vector3Int, GameObject> structuresToBeModified)
     {
-        var roadNeighboursStatus = 0;
-
+        int roadNeighboursStatus = 0;
         foreach (Direction direction in Enum.GetValues(typeof(Direction)))
         {
             var neighbourPosition = grid.GetPositionOfTheNeighbourIfExists(gridPosition, direction);
-            if (neighbourPosition.HasValue && grid.IsCellTaken(neighbourPosition.Value))
+            if (neighbourPosition.HasValue)
             {
-
-                var neighbourStructureData = grid.GetStructureDataFromTheGrid(neighbourPosition.Value);
-                if (neighbourStructureData != null || CheckDictionaryForRoadAtNeighbour(neighbourPosition.Value, structuresToBeModified))
+                if (CheckIfNeighbourIsRoadOnTheGrid(grid, neighbourPosition) || CheckIfNeighbourIsRoadInDictionary(neighbourPosition, structuresToBeModified))
                 {
                     roadNeighboursStatus += (int)direction;
                 }
             }
-
         }
         return roadNeighboursStatus;
+    }
+
+    public static bool CheckIfNeighbourIsRoadOnTheGrid(GridStructure grid, Vector3Int? neighbourPosition)
+    {
+        if (grid.IsCellTaken(neighbourPosition.Value))
+        {
+            var neighbourStructureData = grid.GetStructureDataFromTheGrid(neighbourPosition.Value);
+            if (neighbourStructureData != null && neighbourStructureData.GetType() == typeof(RoadStructureSO))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static bool CheckIfNeighbourIsRoadInDictionary(Vector3Int? neighbourPosition, Dictionary<Vector3Int, GameObject> structuresToBeModified)
+    {
+        return structuresToBeModified.ContainsKey(neighbourPosition.Value);
     }
 
     public static bool CheckDictionaryForRoadAtNeighbour(Vector3Int value, Dictionary<Vector3Int, GameObject> structuresToBeModified)

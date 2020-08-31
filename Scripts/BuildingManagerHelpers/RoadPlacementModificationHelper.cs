@@ -31,12 +31,14 @@ public class RoadPlacementModificationHelper : StructureModificationHelper
 
     private void PlaceNewRoadAt(RoadStructureHelper roadStructure, Vector3 gridPosition, Vector3Int gridPositionInt)
     {
-        throw new NotImplementedException();
+        structuresToBeModified.Add(gridPositionInt, placementManager.CreateGhostStructure(gridPosition, roadStructure.RoadPrefab, roadStructure.RoadPrefabRotation));
     }
 
     private void RevokeRoadPlacementAt(Vector3Int gridPositionInt)
     {
-        throw new NotImplementedException();
+        var structure = structuresToBeModified[gridPositionInt];
+        placementManager.DestroySingleStructure(structure);
+        structuresToBeModified.Remove(gridPositionInt);
     }
 
     private RoadStructureHelper GetCorrectRoadPrefab(Vector3 gridPosition)
