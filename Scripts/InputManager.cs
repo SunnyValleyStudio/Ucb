@@ -10,7 +10,15 @@ public class InputManager : MonoBehaviour
 
     public LayerMask mouseInputMask;
 
-    public void GetInput()
+
+    // Update is called once per frame
+    void Update()
+    {
+        GetInput();
+    }
+
+
+    private void GetInput()
     {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
@@ -24,6 +32,16 @@ public class InputManager : MonoBehaviour
 
             }
         }
+    }
+
+    public void AddListenerOnPointerDownEvent(Action<Vector3> listener)
+    {
+        OnPointerDownHandler += listener;
+    }
+
+    public void RemoveListenerOnPointerDownEvent(Action<Vector3> listener)
+    {
+        OnPointerDownHandler -= listener;
     }
 
 }
