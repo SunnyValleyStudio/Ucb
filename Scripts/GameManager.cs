@@ -24,8 +24,14 @@ public class GameManager : MonoBehaviour
         inputManager.AddListenerOnPointerDownEvent(HandleInput);
         inputManager.AddListenerOnPointerSecondDownEvent(HandleInputCameraPan);
         inputManager.AddListenerOnPointerSecondUpEvent(HandleInputCameraStop);
+        inputManager.AddListenerOnPointerChangeEvent(HandlePointerChange);
         uiController.AddListenerOnBuildAreaEvent(StartPlacementMode);
         uiController.AddListenerOnCancleActionEvent(CancelAction);
+    }
+
+    private void HandlePointerChange(Vector3 position)
+    {
+        Debug.Log(position);
     }
 
     private void HandleInputCameraStop()
