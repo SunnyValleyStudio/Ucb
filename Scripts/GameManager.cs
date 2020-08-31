@@ -14,13 +14,26 @@ public class GameManager : MonoBehaviour
     public GridStructure grid;
     private int cellSize = 3;
 
-    private bool buildingModeActive = false;
+    private PlayerState state;
 
+    public PlayerSelectionState selectionState;
+    public PlayerBuildingSingleStructureState buildingSingleStructureState;
+
+    //public PlayerState State { get => state; }
+
+    private void Awake()
+    {
+        grid = new GridStructure(cellSize, width, length);
+        selectionState = new PlayerSelectionState(this, cameraMovement);
+        buildingSingleStructureState = new PlayerBuildingSingleStructureState(this, placementManager, grid);
+        state = selectionState;
+        state.EnterState();
+    }
     void Start()
     {
         cameraMovement.SetCameraLimits(0, width, 0, length);
         inputManager = FindObjectsOfType<MonoBehaviour>().OfType<IInputManager>().FirstOrDefault();
-        grid = new GridStructure(cellSize, width, length);
+        
         inputManager.AddListenerOnPointerDownEvent(HandleInput);
         inputManager.AddListenerOnPointerSecondDownEvent(HandleInputCameraPan);
         inputManager.AddListenerOnPointerSecondUpEvent(HandleInputCameraStop);
@@ -31,40 +44,38 @@ public class GameManager : MonoBehaviour
 
     private void HandlePointerChange(Vector3 position)
     {
-        Debug.Log(position);
+        state.OnInputPointerChange(position);
     }
 
     private void HandleInputCameraStop()
     {
-        cameraMovement.StopCameraMovement();
+        state.OnInputPanUp();
     }
 
     private void HandleInputCameraPan(Vector3 position)
     {
-        if (buildingModeActive == false)
-        {
-            cameraMovement.MoveCamera(position);
-        }
+        state.OnInputPanChange(position);
     }
 
     private void HandleInput(Vector3 position)
     {
-        Vector3 gridPosition = grid.CalculateGridPosition(position);
-        if (buildingModeActive && grid.IsCellTaken(gridPosition) == false)
-        {
-            placementManager.CreateBuilding(gridPosition, grid);
-        }
+        state.OnInputPointerDown(position);
 
     }
 
     private void StartPlacementMode()
     {
-        buildingModeActive = true;
+        TransitionToState(buildingSingleStructureState);
     }
 
     private void CancelAction()
     {
-        buildingModeActive = false;
+        state.OnCancle();
+    }
+    public void TransitionToState(PlayerState newState)
+    {
+        this.state = newState;
+        this.state.EnterState();
     }
 
 }
