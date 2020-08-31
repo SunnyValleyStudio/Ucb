@@ -41,12 +41,13 @@ namespace Tests
         {
             Vector3 inputPosition = PreparePlacement();
             PrepareDemolition(inputPosition);
-            buildingManager.ConfirmDemolition();
+            buildingManager.PrepareBuildingManager(typeof(PlayerDemolitionState));
+            buildingManager.ConfirmModification();
             yield return new WaitForEndOfFrame();
             Assert.IsNull(buildingManager.CheckForStructureInGrid(inputPosition));
         }
 
-        
+
 
         [UnityTest]
         public IEnumerator BuildingManagerPlaymodeDemolishNoConfirmationTest()
@@ -63,7 +64,8 @@ namespace Tests
         {
             Vector3 inputPosition = PreparePlacement();
             PrepareDemolition(inputPosition);
-            buildingManager.CancleDemolition();
+            buildingManager.PrepareBuildingManager(typeof(PlayerDemolitionState));
+            buildingManager.CancelModification();
             yield return new WaitForEndOfFrame();
             Assert.IsNotNull(buildingManager.CheckForStructureInGrid(inputPosition));
 
@@ -74,7 +76,7 @@ namespace Tests
         public IEnumerator BuildingManagerPlaymodePlacementCancleTests()
         {
             Vector3 inputPosition = PreparePlacement();
-            buildingManager.CanclePlacement();
+            buildingManager.CancelModification();
             yield return new WaitForEndOfFrame();
             Assert.IsNull(buildingManager.CheckForStructureInGrid(inputPosition));
 
@@ -84,7 +86,7 @@ namespace Tests
         public IEnumerator BuildingManagerPlaymodePlacementConfirmationPassTests()
         {
             Vector3 inputPosition = PreparePlacement();
-            buildingManager.ConfirmPlacement();
+            buildingManager.ConfirmModification();
             yield return new WaitForEndOfFrame();
             Assert.IsNotNull(buildingManager.CheckForStructureInGrid(inputPosition));
 
@@ -104,7 +106,7 @@ namespace Tests
         public IEnumerator BuildingManagerPlaymodeMaterialChangePlacementPrepareTests()
         {
             Vector3 inputPosition = PreparePlacement();
-            Material material = AccessMaterial(inputPosition, () => buildingManager.CheckForStructureToModifyDictionary(inputPosition));
+            Material material = AccessMaterial(() => buildingManager.CheckForStructureInDictionary(inputPosition));
             yield return new WaitForEndOfFrame();
             Assert.AreEqual(material.color, Color.green);
         }
@@ -113,8 +115,8 @@ namespace Tests
         public IEnumerator BuildingManagerPlaymodeMaterialChangePlacementConfirmTests()
         {
             Vector3 inputPosition = PreparePlacement();
-            buildingManager.ConfirmPlacement();
-            Material material = AccessMaterial(inputPosition, () => buildingManager.CheckForStructureInGrid(inputPosition));
+            buildingManager.ConfirmModification();
+            Material material = AccessMaterial(() => buildingManager.CheckForStructureInGrid(inputPosition));
             yield return new WaitForEndOfFrame();
             Assert.AreEqual(material.color, Color.blue);
         }
@@ -126,7 +128,7 @@ namespace Tests
         {
             Vector3 inputPosition = PreparePlacement();
             PrepareDemolition(inputPosition);
-            Material material = AccessMaterial(inputPosition, () => buildingManager.CheckForStructureToModifyDictionary(inputPosition));
+            Material material = AccessMaterial(() => buildingManager.CheckForStructureInDictionary(inputPosition));
             yield return new WaitForEndOfFrame();
             Assert.AreEqual(material.color, Color.red);
         }
@@ -136,13 +138,14 @@ namespace Tests
         {
             Vector3 inputPosition = PreparePlacement();
             PrepareDemolition(inputPosition);
-            buildingManager.CancleDemolition();
-            Material material = AccessMaterial(inputPosition,()=> buildingManager.CheckForStructureInGrid(inputPosition));
+            buildingManager.PrepareBuildingManager(typeof(PlayerDemolitionState));
+            buildingManager.CancelModification();
+            Material material = AccessMaterial(() => buildingManager.CheckForStructureInGrid(inputPosition));
             yield return new WaitForEndOfFrame();
             Assert.AreEqual(material.color, Color.blue);
         }
 
-        private Material AccessMaterial(Vector3 inputPosition, Func<GameObject> accessMethod)
+        private Material AccessMaterial(Func<GameObject> accessMethod)
         {
             var roadObject = accessMethod();
             Material material = roadObject.GetComponentInChildren<MeshRenderer>().material;
@@ -153,13 +156,15 @@ namespace Tests
         {
             Vector3 inputPosition = new Vector3(1, 0, 1);
             string structureName = "Road";
+            buildingManager.PrepareBuildingManager(typeof(PlayerBuildingRoadState));
             buildingManager.PrepareStructureForPlacement(inputPosition, structureName, StructureType.Road);
             return inputPosition;
         }
 
         private void PrepareDemolition(Vector3 inputPosition)
         {
-            buildingManager.ConfirmPlacement();
+            buildingManager.ConfirmModification();
+            buildingManager.PrepareBuildingManager(typeof(PlayerDemolitionState));
             buildingManager.PrepareStructureForDemolitionAt(inputPosition);
         }
     }
