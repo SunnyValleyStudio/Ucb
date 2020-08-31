@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     public PlayerState State { get => state; }
 
+    public ResourceManager resourceManager;
+
     private void Awake()
     {
         
@@ -40,7 +42,7 @@ public class GameManager : MonoBehaviour
 
     private void PrepareStates()
     {
-        buildingManager = new BuildingManager(cellSize, width, length, placementManager, structureRepository);
+        buildingManager = new BuildingManager(cellSize, width, length, placementManager, structureRepository, resourceManager);
         selectionState = new PlayerSelectionState(this);
         demolishState = new PlayerDemolitionState(this, buildingManager);
         buildingSingleStructureState = new PlayerBuildingSingleStructureState(this, buildingManager);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SingleStructurePlacementHelper : StructureModificationHelper
 {
-    public SingleStructurePlacementHelper(StructureRepository structureRepository, GridStructure grid, IPlacementManager placementManager) : base(structureRepository, grid, placementManager)
+    public SingleStructurePlacementHelper(StructureRepository structureRepository, GridStructure grid, IPlacementManager placementManager, ResourceManager resourceManager) : base(structureRepository, grid, placementManager,resourceManager)
     {
     }
 
@@ -19,12 +19,14 @@ public class SingleStructurePlacementHelper : StructureModificationHelper
         {
             if (structuresToBeModified.ContainsKey(gridPositionInt))
             {
+                resourceManager.AddMoney(structureData.placementCost);
                 RevokeStructurePlacementAt(gridPositionInt);
 
             }
-            else
+            else if (resourceManager.CanIBuyIt(structureData.placementCost))
             {
                 PlaceNewStructureAt(buildingPrefab, gridPosition, gridPositionInt);
+                resourceManager.SpendMoney(structureData.placementCost);
             }
         }
     }

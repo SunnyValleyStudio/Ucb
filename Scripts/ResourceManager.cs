@@ -42,7 +42,7 @@ public class ResourceManager : MonoBehaviour
         Debug.Log("End the game");
     }
 
-    private bool CanIBuyIt(int amount)
+    public bool CanIBuyIt(int amount)
     {
         return moneyHelper.Money >= amount;
     }

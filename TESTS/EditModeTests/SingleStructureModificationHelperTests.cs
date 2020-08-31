@@ -26,7 +26,7 @@ namespace Tests
             tempObject = new GameObject();
             placementManager.CreateGhostStructure(default, default).ReturnsForAnyArgs(tempObject);
             grid = new GridStructure(3, 10, 10);
-            helper = new SingleStructurePlacementHelper(structureRepository, grid, placementManager);
+            helper = new SingleStructurePlacementHelper(structureRepository, grid, placementManager, Substitute.For<ResourceManager>());
         }
         // A Test behaves as an ordinary method
         [Test]

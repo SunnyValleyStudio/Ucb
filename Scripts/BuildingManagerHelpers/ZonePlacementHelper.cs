@@ -9,7 +9,7 @@ public class ZonePlacementHelper : StructureModificationHelper
     bool startPositionAcquired = false;
     Vector3 mapBottomLeftCorner;
     Queue<GameObject> gameObjectsToReuse = new Queue<GameObject>();
-    public ZonePlacementHelper(StructureRepository structureRepository, GridStructure grid, IPlacementManager placementManager, Vector3 mapBottomLeftCorner) : base(structureRepository, grid, placementManager)
+    public ZonePlacementHelper(StructureRepository structureRepository, GridStructure grid, IPlacementManager placementManager, Vector3 mapBottomLeftCorner, ResourceManager resourceManager) : base(structureRepository, grid, placementManager, resourceManager)
     {
         this.mapBottomLeftCorner = mapBottomLeftCorner;
     }

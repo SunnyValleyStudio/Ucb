@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingName: Power plant
   prefab: {fileID: 1874159045682050738, guid: dd1a6dc5c298f884590bc21cbf736ea9, type: 3}
-  placementCost: 0
+  placementCost: 2000
   upkeepCost: 0
   income: 0
   requireRoadAccess: 1
