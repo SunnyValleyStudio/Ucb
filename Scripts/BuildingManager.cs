@@ -62,6 +62,12 @@ public class BuildingManager
 
     public GameObject CheckForStructureToModifyDictionary(Vector3 inputPostion)
     {
-        return singleStructurePlacementHelper.CheckForStructureToModifyDictionary(inputPostion);
+        Vector3 gridPosition = grid.CalculateGridPosition(inputPostion);
+        GameObject structureToReturn = null;
+        structureToReturn = singleStructurePlacementHelper.AccessStructureInDictionary(gridPosition);
+        if(structureToReturn!=null)
+            return structureToReturn;
+        structureToReturn = structureDemolitionHelper.AccessStructureInDictionary(gridPosition);
+        return structureToReturn;
     }
 }
