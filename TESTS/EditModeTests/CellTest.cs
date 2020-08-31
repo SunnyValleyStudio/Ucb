@@ -37,5 +37,14 @@ namespace Tests
             Assert.IsFalse(cell.IsTaken);
         }
 
+        [Test]
+        public void CellGetStructureData()
+        {
+            Cell cell = new Cell();
+            RoadStructureSO roadSO = new RoadStructureSO();
+            cell.SetConstruction(new GameObject(), roadSO);
+
+            Assert.AreEqual(roadSO, cell.GetStructureData());
+        }
     }
 }

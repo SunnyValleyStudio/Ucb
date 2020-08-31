@@ -21,14 +21,13 @@ public class StructureDemolitionHelper : StructureModificationHelper
         {
             grid.RemoveStructureFromTheGrid(gridPosition);
         }
-        var roadPlacementHelper = StructureModificationFactory.GetHelper(typeof(PlayerBuildingRoadState));
         foreach (var keyVeluPair in roadToDemolish)
         {
             Dictionary<Vector3Int, GameObject> neighboursDictionary = RoadManager.GetRoadNeighboursForPosition(grid, keyVeluPair.Key);
             if (neighboursDictionary.Count > 0)
             {
                 var structureData = grid.GetStructureDataFromTheGrid(neighboursDictionary.Keys.First());
-                ((RoadPlacementModificationHelper)roadPlacementHelper).ModifyRoadCellsOnTheGrid(neighboursDictionary, structureData);
+                RoadManager.ModifyRoadCellsOnTheGrid(neighboursDictionary, structureData, null, grid, placementManager);
             }
 
 

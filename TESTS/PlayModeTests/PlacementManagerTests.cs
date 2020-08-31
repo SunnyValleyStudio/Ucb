@@ -34,9 +34,12 @@ namespace Tests
         {
             GameObject ghostObject = placementManager.CreateGhostStructure(gridPosition1, testGameObject);
             yield return new WaitForEndOfFrame();
+            Color color = Color.green;
+            color.a = 0.5f;
             foreach (var renderer in ghostObject.GetComponentsInChildren<MeshRenderer>())
             {
-                Assert.AreEqual(renderer.material.color, Color.green);
+                
+                Assert.AreEqual(renderer.material.color, color);
             }
         }
 
@@ -58,9 +61,12 @@ namespace Tests
         {
             placementManager.SetBuildingForDemolition(testGameObject);
             yield return new WaitForEndOfFrame();
+            Color color = Color.red;
+            color.a = 0.5f;
             foreach (var renderer in testGameObject.GetComponentsInChildren<MeshRenderer>())
             {
-                Assert.AreEqual(renderer.material.color, Color.red);
+                
+                Assert.AreEqual(renderer.material.color, color);
             }
 
 

@@ -176,6 +176,26 @@ namespace Tests
             Assert.AreEqual(null, retreivedGameObject);
         }
 
+        [Test]
+        public void GetPositionOfTheNeighbourIfExistsTestPass()
+        {
+
+            Vector3 position = new Vector3(0, 0, 0);
+
+            var neighbourPosition = structure.GetPositionOfTheNeighbourIfExists(position, Direction.Up);
+            Assert.AreEqual(new Vector3Int(0, 0, 3), neighbourPosition.Value);
+        }
+
+        [Test]
+        public void GetPositionOfTheNeighbourIfExistsTestFail()
+        {
+
+            Vector3 position = new Vector3(0, 0, 0);
+
+            var neighbourPosition = structure.GetPositionOfTheNeighbourIfExists(position, Direction.Down);
+            Assert.IsFalse(neighbourPosition.HasValue);
+        }
+
         #endregion
     }
 }
