@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public PlayerSelectionState selectionState;
     public PlayerBuildingSingleStructureState buildingSingleStructureState;
 
-    //public PlayerState State { get => state; }
+    public PlayerState State { get => state; }
 
     private void Awake()
     {
