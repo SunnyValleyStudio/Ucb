@@ -21,10 +21,12 @@ public class RoadPlacementModificationHelper : StructureModificationHelper
             if (structuresToBeModified.ContainsKey(gridPositionInt))
             {
                 RevokeRoadPlacementAt(gridPositionInt);
+                resourceManager.AddMoney(structureData.placementCost);
             }
-            else
+            else if(resourceManager.CanIBuyIt(structureData.placementCost))
             {
                 PlaceNewRoadAt(roadStructure, gridPosition, gridPositionInt);
+                resourceManager.SpendMoney(structureData.placementCost);
             }
             AdjustNeighboursIfAreRoadStructures(gridPosition);
         }
@@ -89,6 +91,7 @@ public class RoadPlacementModificationHelper : StructureModificationHelper
 
     public override void CancleModifications()
     {
+        resourceManager.AddMoney(structuresToBeModified.Count * structureData.placementCost);
         base.CancleModifications();
         existingRoadStructuresToModify.Clear();
     }
