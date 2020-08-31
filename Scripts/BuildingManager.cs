@@ -6,12 +6,12 @@ using UnityEngine;
 public class BuildingManager
 {
     GridStructure grid;
-    PlacementManager placementManager;
+    IPlacementManager placementManager;
     StructureRepository structureRepository;
     StructureModificationFactory helperFactory;
     StructureModificationHelper helper;
 
-    public BuildingManager(int cellSize, int width, int length, PlacementManager placementManager, StructureRepository structureRepository)
+    public BuildingManager(int cellSize, int width, int length, IPlacementManager placementManager, StructureRepository structureRepository)
     {
         this.grid = new GridStructure(cellSize, width, length);
         this.placementManager = placementManager;

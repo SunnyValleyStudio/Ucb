@@ -7,9 +7,9 @@ public abstract class StructureModificationHelper
     protected Dictionary<Vector3Int, GameObject> structuresToBeModified = new Dictionary<Vector3Int, GameObject>();
     protected readonly StructureRepository structureRepository;
     protected readonly GridStructure grid;
-    protected readonly PlacementManager placementManager;
+    protected readonly IPlacementManager placementManager;
 
-    public StructureModificationHelper(StructureRepository structureRepository, GridStructure grid, PlacementManager placementManager)
+    public StructureModificationHelper(StructureRepository structureRepository, GridStructure grid, IPlacementManager placementManager)
     {
         this.structureRepository = structureRepository;
         this.grid = grid;

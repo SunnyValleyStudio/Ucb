@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlacementManager : MonoBehaviour
+public class PlacementManager : MonoBehaviour, IPlacementManager
 {
     public Transform ground;
     public Material transparentMaterial;
@@ -46,13 +46,13 @@ public class PlacementManager : MonoBehaviour
         foreach (var structure in structureCollection)
         {
 
-            ResetBuildingMaterial(structure);
+            ResetBuildingLook(structure);
 
         }
         originalMaterials.Clear();
     }
 
-    public void ResetBuildingMaterial(GameObject structure)
+    public void ResetBuildingLook(GameObject structure)
     {
         foreach (Transform child in structure.transform)
         {

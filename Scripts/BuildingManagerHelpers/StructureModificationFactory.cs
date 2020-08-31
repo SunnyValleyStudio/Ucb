@@ -7,7 +7,7 @@ public class StructureModificationFactory
 {
     private readonly StructureModificationHelper singleStructurePlacementHelper;
     private readonly StructureModificationHelper structureDemolitionHelper;
-    public StructureModificationFactory(StructureRepository structureRepository, GridStructure grid, PlacementManager placementManager)
+    public StructureModificationFactory(StructureRepository structureRepository, GridStructure grid, IPlacementManager placementManager)
     {
         singleStructurePlacementHelper = new SingleStructurePlacementHelper(structureRepository, grid, placementManager);
         structureDemolitionHelper = new StructureDemolitionHelper(structureRepository, grid, placementManager);
