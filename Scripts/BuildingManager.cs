@@ -34,9 +34,9 @@ public class BuildingManager
         helper.ConfirmModifications();
     }
 
-    internal IEnumerable<StructureBaseSO> GetAllStructures()
+    public IEnumerable<StructureBaseSO> GetAllStructures()
     {
-        throw new NotImplementedException();
+        return grid.GetAllStructures();
     }
 
     public void CancelModification()

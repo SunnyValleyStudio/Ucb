@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
 namespace Tests
 {
+    [TestFixture]
     public class GridStructureTests
     {
         GridStructure structure;
-        [OneTimeSetUp]
+        [SetUp]
         public void Init()
         {
             structure = new GridStructure(3, 100, 100);
@@ -213,6 +215,20 @@ namespace Tests
             Assert.IsTrue(returnValues.Contains(new Vector3Int(0, 0, 3)));
             Assert.IsTrue(returnValues.Contains(new Vector3Int(3, 0, 3)));
             Assert.IsTrue(returnValues.Contains(new Vector3Int(6, 0, 3)));
+        }
+
+        [Test]
+        public void GetDataStructureTest()
+        {
+            RoadStructureSO road = ScriptableObject.CreateInstance<RoadStructureSO>();
+            SingleStructureBaseSO singleStructure = ScriptableObject.CreateInstance<SingleFacilitySO>();
+            GameObject gameObject = new GameObject();
+            structure.PlaceStructureOnTheGrid(gameObject, new Vector3(0, 0, 0), road);
+            structure.PlaceStructureOnTheGrid(gameObject, new Vector3(3, 0, 0), road);
+            structure.PlaceStructureOnTheGrid(gameObject, new Vector3(0, 0, 3), singleStructure);
+            structure.PlaceStructureOnTheGrid(gameObject, new Vector3(3, 0, 3), singleStructure);
+            var list = structure.GetAllStructures().ToList();
+            Assert.IsTrue(list.Count == 4);
         }
     }
 }
