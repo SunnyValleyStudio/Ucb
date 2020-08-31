@@ -20,25 +20,24 @@ public abstract class PlayerState
     {
 
     }
-
     public virtual void OnBuildArea(string structureName)
     {
-
+        this.gameManager.TransitionToState(this.gameManager.buildingAreaState, structureName);
     }
 
     public virtual void OnBuildSingleStructure(string structureName)
     {
-
+        this.gameManager.TransitionToState(this.gameManager.buildingSingleStructureState, structureName);
     }
 
     public virtual void OnBuildRoad(string structureName)
     {
-
+        this.gameManager.TransitionToState(this.gameManager.buildingRoadState, structureName);
     }
 
     public virtual void OnDemolishAction()
     {
-        
+        this.gameManager.TransitionToState(this.gameManager.demolishState, null);
     }
 
     public abstract void OnCancle();

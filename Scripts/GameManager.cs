@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public PlayerBuildingSingleStructureState buildingSingleStructureState;
     public PlayerRemoveBuildingState demolishState;
     public PlayerBuildingRoadState buildingRoadState;
-    public PlayerBuildingAreaState buildingAreaState;
+    public PlayerBuildAreaState buildingAreaState;
 
     public PlayerState State { get => state; }
 
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         selectionState = new PlayerSelectionState(this, cameraMovement);
         demolishState = new PlayerRemoveBuildingState(this, buildingManager);
         buildingSingleStructureState = new PlayerBuildingSingleStructureState(this, buildingManager);
-        buildingAreaState = new PlayerBuildingAreaState(this, buildingManager);
+        buildingAreaState = new PlayerBuildAreaState(this, buildingManager);
         buildingRoadState = new PlayerBuildingRoadState(this, buildingManager);
         state = selectionState;
         state.EnterState(null);

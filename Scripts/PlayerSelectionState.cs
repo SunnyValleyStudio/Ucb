@@ -19,28 +19,9 @@ public class PlayerSelectionState : PlayerState
         cameraMovement.StopCameraMovement();
     }
 
-    public virtual void OnBuildArea(string structureName)
-    {
-        this.gameManager.TransitionToState(this.gameManager.buildingAreaState, structureName);
-    }
-
-    public virtual void OnBuildSingleStructure(string structureName)
-    {
-        this.gameManager.TransitionToState(this.gameManager.buildingSingleStructureState, structureName);
-    }
-
-    public virtual void OnBuildRoad(string structureName)
-    {
-        this.gameManager.TransitionToState(this.gameManager.buildingRoadState, structureName);
-    }
-
-    public override void OnDemolishAction()
-    {
-        this.gameManager.TransitionToState(this.gameManager.demolishState, null);
-    }
 
     public override void OnCancle()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 }
