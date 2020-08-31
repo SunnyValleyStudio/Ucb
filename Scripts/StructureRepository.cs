@@ -66,6 +66,21 @@ public class StructureRepository : MonoBehaviour
         return modelDataCollection.roadStructure.prefab;
     }
 
+    public StructureBaseSO GetStructureData(string structureName, StructureType structureType)
+    {
+        switch (structureType)
+        {
+            case StructureType.Zone:
+                return modelDataCollection.zonesList.Where(structure => structure.buildingName == structureName).FirstOrDefault();
+            case StructureType.SingleStructure:
+                return modelDataCollection.singleStructureList.Where(structure => structure.buildingName == structureName).FirstOrDefault();
+            case StructureType.Road:
+                return modelDataCollection.roadStructure;
+            default:
+                throw new Exception("No such type. not implemented for " + structureType);
+        }
+    }
+
     private GameObject GetSingleStructureBuildingPrefabByName(string structureName)
     {
         var foundStructure = modelDataCollection.singleStructureList.Where(structure => structure.buildingName == structureName).FirstOrDefault();

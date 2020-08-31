@@ -39,21 +39,7 @@ public class SingleStructurePlacementHelper : StructureModificationHelper
         structuresToBeModified.Remove(gridPositionInt);
     }
 
-    public override void ConfirmModifications()
-    {
-        placementManager.PlaceStructuresOnTheMap(structuresToBeModified.Values);
-        foreach (var keyValuePair in structuresToBeModified)
-        {
-            grid.PlaceStructureOnTheGrid(keyValuePair.Value, keyValuePair.Key);
-        }
-        structuresToBeModified.Clear();
-    }
-
-    public override void CancleModifications()
-    {
-        placementManager.DestroyStructures(structuresToBeModified.Values);
-        structuresToBeModified.Clear();
-    }
+    
 
 
 }

@@ -96,7 +96,7 @@ namespace Tests
             //Act
             Vector3 returnPosition = structure.CalculateGridPosition(position);
             GameObject testGameObject = new GameObject("TestGameObject");
-            structure.PlaceStructureOnTheGrid(testGameObject, position);
+            structure.PlaceStructureOnTheGrid(testGameObject, position, null);
             //Assert
             Assert.IsTrue(structure.IsCellTaken(position));
         }
@@ -108,7 +108,7 @@ namespace Tests
             //Act
             Vector3 returnPosition = structure.CalculateGridPosition(position);
             GameObject testGameObject = new GameObject("TestGameObject");
-            structure.PlaceStructureOnTheGrid(testGameObject, position);
+            structure.PlaceStructureOnTheGrid(testGameObject, position, null);
             //Assert
             Assert.IsTrue(structure.IsCellTaken(position));
         }
@@ -120,7 +120,7 @@ namespace Tests
             //Act
             Vector3 returnPosition = structure.CalculateGridPosition(position);
             GameObject testGameObject = new GameObject("TestGameObject");
-            structure.PlaceStructureOnTheGrid(testGameObject, position);
+            structure.PlaceStructureOnTheGrid(testGameObject, position, null);
             //Assert
             Assert.IsTrue(structure.IsCellTaken(position));
         }
@@ -133,7 +133,7 @@ namespace Tests
             //Act
             Vector3 returnPosition = structure.CalculateGridPosition(position);
             GameObject testGameObject = null;
-            structure.PlaceStructureOnTheGrid(testGameObject, position);
+            structure.PlaceStructureOnTheGrid(testGameObject, position, null);
             //Assert
             Assert.IsFalse(structure.IsCellTaken(position));
         }
@@ -145,7 +145,35 @@ namespace Tests
             Vector3 position = new Vector3(303, 0, 303);
             //Act
             //Assert
-            Assert.Throws<IndexOutOfRangeException>(()=>structure.IsCellTaken(position));
+            Assert.Throws<IndexOutOfRangeException>(() => structure.IsCellTaken(position));
+        }
+
+        [Test]
+        public void RetreiveStructureFromCellGameObjectPasses()
+        {
+
+            Vector3 position = new Vector3(297, 0, 297);
+            //Act
+            Vector3 returnPosition = structure.CalculateGridPosition(position);
+            GameObject testGameObject = new GameObject("TestGameObject");
+            structure.PlaceStructureOnTheGrid(testGameObject, position, null);
+            GameObject retreivedGameObject = structure.GetStructureFromTheGrid(position);
+            //Assert
+            Assert.AreEqual(testGameObject, retreivedGameObject);
+        }
+
+        [Test]
+        public void RetreiveStructureFromCellNullPasses()
+        {
+
+            Vector3 position = new Vector3(297, 0, 297);
+            //Act
+            Vector3 returnPosition = structure.CalculateGridPosition(position);
+            //clean up after any other test
+            structure.RemoveStructureFromTheGrid(position);
+            GameObject retreivedGameObject = structure.GetStructureFromTheGrid(position);
+            //Assert
+            Assert.AreEqual(null, retreivedGameObject);
         }
 
         #endregion
