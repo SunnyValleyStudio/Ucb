@@ -42,7 +42,7 @@ public class PlayerDemolitionState : PlayerState
 
     public override void OnInputPointerDown(Vector3 position)
     {
-        this.buildingManager.PrepareStructureForDemolitionAt(position);
+        this.buildingManager.RemoveBuildingAt(position);
     }
 
 }
