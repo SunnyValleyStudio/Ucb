@@ -47,6 +47,8 @@ namespace Tests
             uiController = Substitute.For<UiController>();
 
             gameManagerComponent = gameManagerObject.AddComponent<GameManager>();
+            gameManagerObject.AddComponent<PlacementManager>();
+            gameManagerComponent.placementManagerGameObject = gameManagerObject;
             gameManagerComponent.cameraMovement = camerMovementComponent;
             gameManagerComponent.uiController = uiController;
         }
