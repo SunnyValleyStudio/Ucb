@@ -8,7 +8,6 @@ public class BuildingManager
     GridStructure grid;
     IPlacementManager placementManager;
     StructureRepository structureRepository;
-    StructureModificationFactory helperFactory;
     StructureModificationHelper helper;
 
     public BuildingManager(int cellSize, int width, int length, IPlacementManager placementManager, StructureRepository structureRepository)
@@ -16,13 +15,13 @@ public class BuildingManager
         this.grid = new GridStructure(cellSize, width, length);
         this.placementManager = placementManager;
         this.structureRepository = structureRepository;
-        this.helperFactory = new StructureModificationFactory(structureRepository, grid, placementManager);
+        StructureModificationFactory.PrepareFactory(structureRepository, grid, placementManager);
 
     }
 
     public void PrepareBuildingManager(Type classType)
     {
-        helper = helperFactory.GetHelper(classType);
+        helper = StructureModificationFactory.GetHelper(classType);
     }
 
     public void PrepareStructureForPlacement(Vector3 inputPosition, string structureName, StructureType structureType)

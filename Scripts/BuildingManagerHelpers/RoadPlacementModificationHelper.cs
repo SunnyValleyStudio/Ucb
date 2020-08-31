@@ -17,7 +17,7 @@ public class RoadPlacementModificationHelper : StructureModificationHelper
         if (grid.IsCellTaken(gridPosition) == false)
         {
             var gridPositionInt = Vector3Int.FloorToInt(gridPosition);
-            var roadStructure = GetCorrectRoadPrefab(gridPosition);
+            var roadStructure = GetCorrectRoadPrefab(gridPosition, structureData);
             if (structuresToBeModified.ContainsKey(gridPositionInt))
             {
                 RevokeRoadPlacementAt(gridPositionInt);
@@ -67,7 +67,7 @@ public class RoadPlacementModificationHelper : StructureModificationHelper
         if (RoadManager.CheckIfNeighbourIsRoadInDictionary(neighbourPositionInt, structuresToBeModified))
         {
             RevokeRoadPlacementAt(neighbourPositionInt);
-            var neighboursStructure = GetCorrectRoadPrefab(neighbourGridPosition.Value);
+            var neighboursStructure = GetCorrectRoadPrefab(neighbourGridPosition.Value, structureData);
             PlaceNewRoadAt(neighboursStructure, neighbourGridPosition.Value, neighbourPositionInt);
         }
     }
@@ -84,7 +84,7 @@ public class RoadPlacementModificationHelper : StructureModificationHelper
         structuresToBeModified.Remove(gridPositionInt);
     }
 
-    private RoadStructureHelper GetCorrectRoadPrefab(Vector3 gridPosition)
+    private RoadStructureHelper GetCorrectRoadPrefab(Vector3 gridPosition, StructureBaseSO structureData)
     {
         var neighboursStatus = RoadManager.GetRoadNeighboursStatus(gridPosition, grid, structuresToBeModified);
         RoadStructureHelper roadToReturn = null;
@@ -110,16 +110,22 @@ public class RoadPlacementModificationHelper : StructureModificationHelper
 
     public override void ConfirmModifications()
     {
-        foreach (var keyValuePair in existingRoadStructuresToModify)
+        ModifyRoadCellsOnTheGrid(existingRoadStructuresToModify, structureData);
+
+        base.ConfirmModifications();
+    }
+
+    public void ModifyRoadCellsOnTheGrid(Dictionary<Vector3Int, GameObject> neighboursDictionar, StructureBaseSO structureData)
+    {
+        foreach (var keyValuePair in neighboursDictionar)
         {
             grid.RemoveStructureFromTheGrid(keyValuePair.Key);
             placementManager.DestroySingleStructure(keyValuePair.Value);
-            var roadStructure = GetCorrectRoadPrefab(keyValuePair.Key);
+            var roadStructure = GetCorrectRoadPrefab(keyValuePair.Key, structureData);
             var structure = placementManager.PlaceStructureOnTheMap(keyValuePair.Key, roadStructure.RoadPrefab, roadStructure.RoadPrefabRotation);
             grid.PlaceStructureOnTheGrid(structure, keyValuePair.Key, structureData);
         }
-        existingRoadStructuresToModify.Clear();
-        base.ConfirmModifications();
+        neighboursDictionar.Clear();
     }
 
 

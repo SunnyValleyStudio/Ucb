@@ -3,19 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StructureModificationFactory
+public static class StructureModificationFactory
 {
-    private readonly StructureModificationHelper singleStructurePlacementHelper;
-    private readonly StructureModificationHelper structureDemolitionHelper;
-    private readonly RoadPlacementModificationHelper roadStructurePlacementHelper;
-    public StructureModificationFactory(StructureRepository structureRepository, GridStructure grid, IPlacementManager placementManager)
+    private static StructureModificationHelper singleStructurePlacementHelper;
+    private static StructureModificationHelper structureDemolitionHelper;
+    private static RoadPlacementModificationHelper roadStructurePlacementHelper;
+    public static void PrepareFactory(StructureRepository structureRepository, GridStructure grid, IPlacementManager placementManager)
     {
         singleStructurePlacementHelper = new SingleStructurePlacementHelper(structureRepository, grid, placementManager);
         structureDemolitionHelper = new StructureDemolitionHelper(structureRepository, grid, placementManager);
         roadStructurePlacementHelper = new RoadPlacementModificationHelper(structureRepository, grid, placementManager);
     }
 
-    public StructureModificationHelper GetHelper(Type classType)
+    public static StructureModificationHelper GetHelper(Type classType)
     {
         if (classType == typeof(PlayerDemolitionState))
         {
