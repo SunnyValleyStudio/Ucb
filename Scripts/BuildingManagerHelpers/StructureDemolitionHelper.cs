@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -23,6 +24,7 @@ public class StructureDemolitionHelper : StructureModificationHelper
     {
         foreach (var gridPosition in structuresToBeModified.Keys)
         {
+            PrepareStructureForDemolition(gridPosition);
             grid.RemoveStructureFromTheGrid(gridPosition);
         }
         foreach (var keyVeluPair in roadToDemolish)
@@ -38,6 +40,18 @@ public class StructureDemolitionHelper : StructureModificationHelper
         }
         this.placementManager.DestroyStructures(structuresToBeModified.Values);
         structuresToBeModified.Clear();
+    }
+
+    private void PrepareStructureForDemolition(Vector3Int gridPosition)
+    {
+        var data = grid.GetStructureDataFromTheGrid(gridPosition);
+        if (data != null)
+        {
+            if (data.GetType() == typeof(ZoneStructureSO) && ((ZoneStructureSO)data).zoneType == ZoneType.Residential)
+            {
+                resourceManager.ReducePopulation(1);
+            }
+        }
     }
 
     public override void PrepareStructureForModification(Vector3 inputPosition, string structureName, StructureType structureType)

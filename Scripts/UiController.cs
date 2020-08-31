@@ -33,6 +33,7 @@ public class UiController : MonoBehaviour
     public GameObject buildButtonPrefab;
 
     public TextMeshProUGUI moneyValue;
+    public TextMeshProUGUI populationValue;
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +77,11 @@ public class UiController : MonoBehaviour
         CreateButtonsInPanel(zonesPanel.transform, structureRepository.GetZoneNames(), OnBuildAreaCallback);
         CreateButtonsInPanel(facilitiesPanel.transform, structureRepository.GetSingleStructureNames(), OnBuildSingleStructureCallback);
         CreateButtonsInPanel(roadsPanel.transform, new List<string>() { structureRepository.GetRoadStructureName() }, OnBuildRoadCallback);
+    }
+
+    public void SetPopulationValue(int population)
+    {
+        populationValue.text = population + "";
     }
 
     private void OnBuildRoadCallback(string nameOfStructure)

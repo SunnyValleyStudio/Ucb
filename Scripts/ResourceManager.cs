@@ -12,6 +12,7 @@ public class ResourceManager : MonoBehaviour, IResourceManager
     [SerializeField]
     private float moneyCalculationInterval = 2;
     MoneyHelper moneyHelper;
+    PopulationHelper populationHelper;
     private BuildingManager buildingManger;
     public UiController uiController;
 
@@ -24,7 +25,8 @@ public class ResourceManager : MonoBehaviour, IResourceManager
     void Start()
     {
         moneyHelper = new MoneyHelper(startMoneyAmount);
-        UpdateMoneyValueUI();
+        populationHelper = new PopulationHelper();
+        UpdateUI();
     }
 
     public void PrepareResourceManager(BuildingManager buildingManager)
@@ -40,7 +42,7 @@ public class ResourceManager : MonoBehaviour, IResourceManager
             try
             {
                 moneyHelper.ReduceMoney(amount);
-                UpdateMoneyValueUI();
+                UpdateUI();
                 return true;
             }
             catch (MoneyException)
@@ -67,7 +69,7 @@ public class ResourceManager : MonoBehaviour, IResourceManager
         try
         {
             moneyHelper.CalculateMoney(buildingManger.GetAllStructures());
-            UpdateMoneyValueUI();
+            UpdateUI();
         }
         catch (MoneyException)
         {
@@ -83,12 +85,13 @@ public class ResourceManager : MonoBehaviour, IResourceManager
     public void AddMoney(int amount)
     {
         moneyHelper.AddMoney(amount);
-        UpdateMoneyValueUI();
+        UpdateUI();
     }
 
-    private void UpdateMoneyValueUI()
+    private void UpdateUI()
     {
         uiController.SetMoneyValue(moneyHelper.Money);
+        uiController.SetPopulationValue(populationHelper.Population);
     }
 
     // Update is called once per frame
@@ -101,5 +104,18 @@ public class ResourceManager : MonoBehaviour, IResourceManager
     {
         int amount = (int)(moneyHelper.Money / placementCost);
         return amount > numberOfStructures ? numberOfStructures : amount;
+    }
+
+    public void AddToPopulation(int value)
+    {
+        populationHelper.AddToPopulation(value);
+        UpdateUI();
+    }
+
+    public void ReducePopulation(int value)
+    {
+        populationHelper.ReducePopulation(value);
+        UpdateUI();
+
     }
 }

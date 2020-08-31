@@ -14,6 +14,11 @@ public class ResourceManagerTestStud : MonoBehaviour, IResourceManager
     {
     }
 
+    public void AddToPopulation(int value)
+    {
+        
+    }
+
     public void CalculateTownIncome()
     {
 
@@ -31,6 +36,11 @@ public class ResourceManagerTestStud : MonoBehaviour, IResourceManager
 
     public void PrepareResourceManager(BuildingManager buildingManager)
     {
+    }
+
+    public void ReducePopulation(int value)
+    {
+
     }
 
     public bool SpendMoney(int amount)
