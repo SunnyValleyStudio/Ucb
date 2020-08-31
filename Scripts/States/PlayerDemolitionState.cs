@@ -18,8 +18,8 @@ public class PlayerDemolitionState : PlayerState
 
     public override void OnConfirmAction()
     {
-        base.OnConfirmAction();
         this.buildingManager.ConfirmDemolition();
+        base.OnConfirmAction();
     }
 
     public override void OnBuildSingleStructure(string structureName)

@@ -15,8 +15,9 @@ public class PlayerBuildingZoneState : PlayerState
 
     public override void OnConfirmAction()
     {
-        base.OnConfirmAction();
+        
         this.buildingManager.ConfirmPlacement();
+        base.OnConfirmAction();
     }
 
     public override void OnCancle()

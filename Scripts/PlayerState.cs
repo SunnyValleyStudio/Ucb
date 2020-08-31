@@ -13,7 +13,7 @@ public abstract class PlayerState
     }
     public virtual void OnConfirmAction()
     {
-
+        this.gameManager.TransitionToState(this.gameManager.selectionState,null);
     }
     public virtual void OnInputPointerDown(Vector3 position) { }
     public virtual void OnInputPointerChange(Vector3 position) { }
