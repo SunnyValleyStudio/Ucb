@@ -18,8 +18,25 @@ public class RoadPlacementModificationHelper : StructureModificationHelper
         {
             var gridPositionInt = Vector3Int.FloorToInt(gridPosition);
             var roadStructure = GetCorrectRoadPrefab(gridPosition);
-
+            if (structuresToBeModified.ContainsKey(gridPositionInt))
+            {
+                RevokeRoadPlacementAt(gridPositionInt);
+            }
+            else
+            {
+                PlaceNewRoadAt(roadStructure, gridPosition, gridPositionInt);
+            }
         }
+    }
+
+    private void PlaceNewRoadAt(RoadStructureHelper roadStructure, Vector3 gridPosition, Vector3Int gridPositionInt)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void RevokeRoadPlacementAt(Vector3Int gridPositionInt)
+    {
+        throw new NotImplementedException();
     }
 
     private RoadStructureHelper GetCorrectRoadPrefab(Vector3 gridPosition)
