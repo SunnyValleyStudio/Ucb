@@ -112,4 +112,25 @@ public class BuildingManager
         this.placementManager.DestroyStructures(structuresToBeModified.Values);
         structuresToBeModified.Clear();
     }
+
+    public GameObject CheckForStructureInGrid(Vector3 inputPosition)
+    {
+        Vector3 gridPositoion = grid.CalculateGridPosition(inputPosition);
+        if (grid.IsCellTaken(gridPositoion))
+        {
+            return grid.GetStructureFromTheGrid(gridPositoion);
+        }
+        return null;
+    }
+
+    public GameObject CheckForStructureToModifyDictionary(Vector3 inputPostion)
+    {
+        Vector3 gridPosition = grid.CalculateGridPosition(inputPostion);
+        var gridPositionInt = Vector3Int.FloorToInt(gridPosition);
+        if (structuresToBeModified.ContainsKey(gridPositionInt))
+        {
+            return structuresToBeModified[gridPositionInt];
+        }
+        return null;
+    }
 }
