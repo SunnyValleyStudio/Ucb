@@ -11,6 +11,10 @@ public class StructureDemolitionHelper : StructureModificationHelper
     }
     public override void CancleModifications()
     {
+        foreach (var item in structuresToBeModified)
+        {
+            resourceManager.AddMoney(resourceManager.DemolitionPrice);
+        }
         this.placementManager.PlaceStructuresOnTheMap(structuresToBeModified.Values);
         structuresToBeModified.Clear();
     }
@@ -45,11 +49,13 @@ public class StructureDemolitionHelper : StructureModificationHelper
             var structure = grid.GetStructureFromTheGrid(gridPosition);
             if (structuresToBeModified.ContainsKey(gridPositionInt))
             {
+                resourceManager.AddMoney(resourceManager.DemolitionPrice);
                 RevokeStructureDemolitionAt(gridPositionInt, structure);
             }
-            else
+            else if (resourceManager.CanIBuyIt(resourceManager.DemolitionPrice))
             {
                 AddStructureForDemolition(gridPositionInt, structure);
+                resourceManager.SpendMoney(resourceManager.DemolitionPrice);
             }
         }
     }

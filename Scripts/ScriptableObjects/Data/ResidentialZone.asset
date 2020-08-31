@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingName: Residential Area
   prefab: {fileID: 8033323200218459389, guid: 190271b57943f7f4db9c39b8b015e331, type: 3}
-  placementCost: 0
+  placementCost: 10
   upkeepCost: 0
-  income: 0
+  income: 10
   requireRoadAccess: 1
   requireWater: 1
   requirePower: 1
