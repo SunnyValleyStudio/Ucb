@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public PlacementManager placementManager;
+    public StructureRepository structureRepository;
     public IInputManager inputManager;
     public UiController uiController;
     public int width, length;
@@ -21,7 +22,7 @@ public class GameManager : MonoBehaviour
     public PlayerBuildingSingleStructureState buildingSingleStructureState;
     public PlayerRemoveBuildingState demolishState;
     public PlayerBuildingRoadState buildingRoadState;
-    public PlayerBuildAreaState buildingAreaState;
+    public PlayerBuildingZoneState buildingAreaState;
 
     public PlayerState State { get => state; }
 
@@ -38,11 +39,11 @@ public class GameManager : MonoBehaviour
 
     private void PrepareStates()
     {
-        buildingManager = new BuildingManager(cellSize, width, length, placementManager);
+        buildingManager = new BuildingManager(cellSize, width, length, placementManager, structureRepository);
         selectionState = new PlayerSelectionState(this, cameraMovement);
         demolishState = new PlayerRemoveBuildingState(this, buildingManager);
         buildingSingleStructureState = new PlayerBuildingSingleStructureState(this, buildingManager);
-        buildingAreaState = new PlayerBuildAreaState(this, buildingManager);
+        buildingAreaState = new PlayerBuildingZoneState(this, buildingManager);
         buildingRoadState = new PlayerBuildingRoadState(this, buildingManager);
         state = selectionState;
         state.EnterState(null);

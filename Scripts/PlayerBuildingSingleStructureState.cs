@@ -27,8 +27,8 @@ public class PlayerBuildingSingleStructureState : PlayerState
 
     public override void OnInputPointerDown(Vector3 position)
     {
-        
-        buildingManager.PlaceStructureAt(position);
+
+        buildingManager.PlaceStructureAt(position, this.structureName, StructureType.SingleStructure);
     }
 
     public override void OnInputPointerUp()
