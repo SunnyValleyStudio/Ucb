@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public int width, length;
     public CameraMovement cameraMovement;
     public GridStructure grid;
+    private BuildingManager buildingManager;
     private int cellSize = 3;
 
     private PlayerState state;
@@ -23,9 +24,9 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        grid = new GridStructure(cellSize, width, length);
+        buildingManager = new BuildingManager(cellSize, width, length, placementManager);
         selectionState = new PlayerSelectionState(this, cameraMovement);
-        buildingSingleStructureState = new PlayerBuildingSingleStructureState(this, placementManager, grid);
+        buildingSingleStructureState = new PlayerBuildingSingleStructureState(this, buildingManager);
         state = selectionState;
         state.EnterState();
     }
