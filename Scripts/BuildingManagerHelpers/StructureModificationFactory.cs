@@ -9,7 +9,7 @@ public static class StructureModificationFactory
     private static StructureModificationHelper structureDemolitionHelper;
     private static StructureModificationHelper roadStructurePlacementHelper;
     private static StructureModificationHelper zonePlacementHelper;
-    public static void PrepareFactory(StructureRepository structureRepository, GridStructure grid, IPlacementManager placementManager, ResourceManager resourceManager)
+    public static void PrepareFactory(StructureRepository structureRepository, GridStructure grid, IPlacementManager placementManager, IResourceManager resourceManager)
     {
         singleStructurePlacementHelper = new SingleStructurePlacementHelper(structureRepository, grid, placementManager, resourceManager);
         structureDemolitionHelper = new StructureDemolitionHelper(structureRepository, grid, placementManager, resourceManager);

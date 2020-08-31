@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceManager : MonoBehaviour
+public class ResourceManager : MonoBehaviour, IResourceManager
 {
-    public int startMoneyAmount = 5000;
-    public float moneyCalculationInterval = 2;
+    private int startMoneyAmount = 5000;
+    private float moneyCalculationInterval = 2;
     MoneyHelper moneyHelper;
     public BuildingManager buildingManger;
     public UiController uiController;
+
+    public int StartMoneyAmount { get => startMoneyAmount; set => startMoneyAmount = value; }
+    public float MoneyCalculationInterval { get => moneyCalculationInterval; set => moneyCalculationInterval = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +77,6 @@ public class ResourceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

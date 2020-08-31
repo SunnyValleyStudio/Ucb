@@ -23,10 +23,12 @@ namespace Tests
         {
             StructureRepository structureRepository = TestHelpers.CreateStructureRepositoryContainingRoad();
             IPlacementManager placementManager = Substitute.For<IPlacementManager>();
+            IResourceManager resourceManager = Substitute.For<IResourceManager>();
+            resourceManager.CanIBuyIt(default).Returns(true);
             tempObject = new GameObject();
             placementManager.CreateGhostStructure(default, default).ReturnsForAnyArgs(tempObject);
             grid = new GridStructure(3, 10, 10);
-            helper = new SingleStructurePlacementHelper(structureRepository, grid, placementManager, Substitute.For<ResourceManager>());
+            helper = new SingleStructurePlacementHelper(structureRepository, grid, placementManager, resourceManager);
         }
         // A Test behaves as an ordinary method
         [Test]
