@@ -2,21 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SingleStructurePlacementHelper
+public class SingleStructurePlacementHelper : StructureModificationHelper
 {
-    Dictionary<Vector3Int, GameObject> structuresToBeModified = new Dictionary<Vector3Int, GameObject>();
-    private readonly StructureRepository structureRepository;
-    private readonly GridStructure grid;
-    private readonly PlacementManager placementManager;
-
-    public SingleStructurePlacementHelper(StructureRepository structureRepository, GridStructure grid, PlacementManager placementManager)
+    public SingleStructurePlacementHelper(StructureRepository structureRepository, GridStructure grid, PlacementManager placementManager) : base(structureRepository, grid, placementManager)
     {
-        this.structureRepository = structureRepository;
-        this.grid = grid;
-        this.placementManager = placementManager;
     }
 
-    public void PrepareStructureForPlacement(Vector3 inputPosition, string structureName, StructureType structureType)
+    public override void PrepareStructureForModification(Vector3 inputPosition, string structureName, StructureType structureType)
     {
         GameObject buildingPrefab = this.structureRepository.GetBuildingPrefabByName(structureName, structureType);
         Vector3 gridPosition = grid.CalculateGridPosition(inputPosition);
@@ -47,7 +39,7 @@ public class SingleStructurePlacementHelper
         structuresToBeModified.Remove(gridPositionInt);
     }
 
-    public void ConfirmPlacement()
+    public override void ConfirmModifications()
     {
         placementManager.PlaceStructuresOnTheMap(structuresToBeModified.Values);
         foreach (var keyValuePair in structuresToBeModified)
@@ -57,30 +49,11 @@ public class SingleStructurePlacementHelper
         structuresToBeModified.Clear();
     }
 
-    public void CanclePlacement()
+    public override void CancleModifications()
     {
         placementManager.DestroyStructures(structuresToBeModified.Values);
         structuresToBeModified.Clear();
     }
 
-    public GameObject AccessStructureInDictionary(Vector3 gridPosition)
-    {
-        var gridPositionInt = Vector3Int.FloorToInt(gridPosition);
-        if (structuresToBeModified.ContainsKey(gridPositionInt))
-        {
-            return structuresToBeModified[gridPositionInt];
-        }
-        return null;
-    }
 
-    public GameObject CheckForStructureToModifyDictionary(Vector3 inputPostion)
-    {
-        Vector3 gridPosition = grid.CalculateGridPosition(inputPostion);
-        var gridPositionInt = Vector3Int.FloorToInt(gridPosition);
-        if (structuresToBeModified.ContainsKey(gridPositionInt))
-        {
-            return structuresToBeModified[gridPositionInt];
-        }
-        return null;
-    }
 }
