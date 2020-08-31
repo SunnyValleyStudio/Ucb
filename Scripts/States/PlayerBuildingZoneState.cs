@@ -13,6 +13,12 @@ public class PlayerBuildingZoneState : PlayerState
         this.buildingManager = buildingManager;
     }
 
+    public override void OnConfirmAction()
+    {
+        base.OnConfirmAction();
+        this.buildingManager.ConfirmPlacement();
+    }
+
     public override void OnCancle()
     {
         this.gameManager.TransitionToState(this.gameManager.selectionState, null);

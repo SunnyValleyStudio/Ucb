@@ -10,6 +10,11 @@ public class PlayerBuildingSingleStructureState : PlayerState
     {
         this.buildingManager = buildingManager;
     }
+    public override void OnConfirmAction()
+    {
+        base.OnConfirmAction();
+        this.buildingManager.ConfirmPlacement();
+    }
     public override void OnInputPointerDown(Vector3 position)
     {
 
@@ -18,6 +23,7 @@ public class PlayerBuildingSingleStructureState : PlayerState
 
     public override void OnCancle()
     {
+        this.buildingManager.CanclePlacement();
         this.gameManager.TransitionToState(this.gameManager.selectionState, null);
     }
 
