@@ -43,7 +43,14 @@ public class SingleStructurePlacementHelper : StructureModificationHelper
         structuresToBeModified.Remove(gridPositionInt);
     }
 
-    
 
+    public override void CancleModifications()
+    {
+        foreach (var item in structuresToBeModified)
+        {
+            resourceManager.AddMoney(structureData.placementCost);
+        }
+        base.CancleModifications();
+    }
 
 }

@@ -8,7 +8,7 @@ public class ResourceManager : MonoBehaviour, IResourceManager
     private int startMoneyAmount = 5000;
     private float moneyCalculationInterval = 2;
     MoneyHelper moneyHelper;
-    public BuildingManager buildingManger;
+    private BuildingManager buildingManger;
     public UiController uiController;
 
     public int StartMoneyAmount { get => startMoneyAmount; set => startMoneyAmount = value; }
@@ -19,6 +19,12 @@ public class ResourceManager : MonoBehaviour, IResourceManager
     {
         moneyHelper = new MoneyHelper(startMoneyAmount);
         UpdateMoneyValueUI();
+    }
+
+    public void PrepareResourceManager(BuildingManager buildingManager)
+    {
+        this.buildingManger = buildingManager;
+        InvokeRepeating("CalculateTownIncome",0,MoneyCalculationInterval);
     }
 
     public bool SpendMoney(int amount)
@@ -61,6 +67,11 @@ public class ResourceManager : MonoBehaviour, IResourceManager
         {
             ReloadGame();
         }
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();  
     }
 
     public void AddMoney(int amount)
