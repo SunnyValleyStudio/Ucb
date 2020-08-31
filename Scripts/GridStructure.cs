@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class GridStructure
 {
-    public int cellSize = 3;
+    private int cellSize;
+
+    public GridStructure(int cellSize)
+    {
+        this.cellSize = cellSize;
+    }
     public Vector3 CalculateGridPosition(Vector3 inputPosition)
     {
         int x = Mathf.FloorToInt((float)inputPosition.x / cellSize);
