@@ -34,6 +34,11 @@ public class BuildingManager
         helper.ConfirmModifications();
     }
 
+    internal IEnumerable<StructureBaseSO> GetAllStructures()
+    {
+        throw new NotImplementedException();
+    }
+
     public void CancelModification()
     {
         helper.CancleModifications();
