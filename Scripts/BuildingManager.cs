@@ -7,110 +7,47 @@ public class BuildingManager
     GridStructure grid;
     PlacementManager placementManager;
     StructureRepository structureRepository;
-    Dictionary<Vector3Int, GameObject> structuresToBeModified = new Dictionary<Vector3Int, GameObject>();
+    SingleStructurePlacementHelper singleStructurePlacementHelper;
+    StructureDemolitionHelper structureDemolitionHelper;
 
     public BuildingManager(int cellSize, int width, int length, PlacementManager placementManager, StructureRepository structureRepository)
     {
         this.grid = new GridStructure(cellSize, width, length);
         this.placementManager = placementManager;
         this.structureRepository = structureRepository;
+        singleStructurePlacementHelper = new SingleStructurePlacementHelper(structureRepository, grid, placementManager);
+        structureDemolitionHelper = new StructureDemolitionHelper(structureRepository, grid, placementManager);
     }
 
     public void PrepareStructureForPlacement(Vector3 inputPosition, string structureName, StructureType structureType)
     {
-        GameObject buildingPrefab = this.structureRepository.GetBuildingPrefabByName(structureName, structureType);
-        Vector3 gridPosition = grid.CalculateGridPosition(inputPosition);
-        var gridPositionInt = Vector3Int.FloorToInt(gridPosition);
-        if (grid.IsCellTaken(gridPosition) == false )
-        {
-            if(structuresToBeModified.ContainsKey(gridPositionInt))
-            {
-                RevokeStructurePlacementAt(gridPositionInt);
-            }
-            else
-            {
-                PlaceNewStructureAt(buildingPrefab, gridPosition, gridPositionInt);
-            }
-
-
-        }
+        singleStructurePlacementHelper.PrepareStructureForPlacement(inputPosition, structureName, structureType);
     }
-
-    private void PlaceNewStructureAt(GameObject buildingPrefab, Vector3 gridPosition, Vector3Int gridPositionInt)
-    {
-        structuresToBeModified.Add(gridPositionInt, placementManager.CreateGhostStructure(gridPosition, buildingPrefab));
-    }
-
-    private void RevokeStructurePlacementAt(Vector3Int gridPositionInt)
-    {
-        var structure = structuresToBeModified[gridPositionInt];
-        placementManager.DestroySingleStructure(structure);
-        structuresToBeModified.Remove(gridPositionInt);
-    }
-
 
     public void ConfirmPlacement()
     {
-        placementManager.PlaceStructuresOnTheMap(structuresToBeModified.Values);
-        foreach (var keyValuePair in structuresToBeModified)
-        {
-            grid.PlaceStructureOnTheGrid(keyValuePair.Value, keyValuePair.Key);
-        }
-        structuresToBeModified.Clear();
+        singleStructurePlacementHelper.ConfirmPlacement();
     }
 
     public void CanclePlacement()
     {
-        placementManager.DestroyStructures(structuresToBeModified.Values);
-        structuresToBeModified.Clear();
+        singleStructurePlacementHelper.CanclePlacement();
     }
 
 
     public void PrepareStructureForDemolitionAt(Vector3 inputPosition)
     {
-        Vector3 gridPosition = grid.CalculateGridPosition(inputPosition);
-        if (grid.IsCellTaken(gridPosition))
-        {
-            
-            var gridPositionInt = Vector3Int.FloorToInt(gridPosition);
-            var structure = grid.GetStructureFromTheGrid(gridPosition);
-            if (structuresToBeModified.ContainsKey(gridPositionInt))
-            {
-                RevokeStructureDemolitionAt(gridPositionInt, structure);
-            }
-            else
-            {
-                AddStructureForDemolition(gridPositionInt, structure);
-            }
-        }
-    }
-
-    private void AddStructureForDemolition(Vector3Int gridPositionInt, GameObject structure)
-    {
-        structuresToBeModified.Add(gridPositionInt, structure);
-        placementManager.SetBuildingForDemolition(structure);
-    }
-
-    private void RevokeStructureDemolitionAt(Vector3Int gridPositionInt, GameObject structure)
-    {
-        placementManager.ResetBuildingMaterial(structure);
-        structuresToBeModified.Remove(gridPositionInt);
+        structureDemolitionHelper.PrepareStructureForDemolitionAt(inputPosition);
     }
 
     public void CancleDemolition()
     {
-        this.placementManager.PlaceStructuresOnTheMap(structuresToBeModified.Values);
-        structuresToBeModified.Clear();
+        structureDemolitionHelper.CancleDemolition();
     }
 
     public void ConfirmDemolition()
     {
-        foreach (var gridPosition in structuresToBeModified.Keys)
-        {
-            grid.RemoveStructureFromTheGrid(gridPosition);
-        }
-        this.placementManager.DestroyStructures(structuresToBeModified.Values);
-        structuresToBeModified.Clear();
+        structureDemolitionHelper.ConfirmDemolition();
     }
 
     public GameObject CheckForStructureInGrid(Vector3 inputPosition)
@@ -125,12 +62,6 @@ public class BuildingManager
 
     public GameObject CheckForStructureToModifyDictionary(Vector3 inputPostion)
     {
-        Vector3 gridPosition = grid.CalculateGridPosition(inputPostion);
-        var gridPositionInt = Vector3Int.FloorToInt(gridPosition);
-        if (structuresToBeModified.ContainsKey(gridPositionInt))
-        {
-            return structuresToBeModified[gridPositionInt];
-        }
-        return null;
+        return singleStructurePlacementHelper.CheckForStructureToModifyDictionary(inputPostion);
     }
 }
