@@ -146,6 +146,10 @@ public class UiController : MonoBehaviour
     {
         OnDemolishActionHandler -= listener;
     }
+    public void AddListenerOnBuildSingleStructureEvent(Action<string> listener)
+    {
+        OnBuildSingleStructureHandler += listener;
+    }
 
     public void RemoveListenerOnBuildSingleStructureEvent(Action<string> listener)
     {
