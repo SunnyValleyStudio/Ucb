@@ -32,7 +32,7 @@ public abstract class StructureModificationHelper
         placementManager.PlaceStructuresOnTheMap(structuresToBeModified.Values);
         foreach (var keyValuePair in structuresToBeModified)
         {
-            grid.PlaceStructureOnTheGrid(keyValuePair.Value, keyValuePair.Key, structureData);
+            grid.PlaceStructureOnTheGrid(keyValuePair.Value, keyValuePair.Key, GameObject.Instantiate(structureData) );
         }
         ResetHelpersData();
     }
