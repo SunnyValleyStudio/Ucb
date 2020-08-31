@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public IInputManager inputManager;
     public UiController uiController;
     public int width, length;
+    public CameraMovement cameraMovement;
     public GridStructure grid;
     private int cellSize = 3;
 
@@ -17,11 +18,27 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        cameraMovement.SetCameraLimits(0, width, 0, length);
         inputManager = FindObjectsOfType<MonoBehaviour>().OfType<IInputManager>().FirstOrDefault();
         grid = new GridStructure(cellSize, width, length);
         inputManager.AddListenerOnPointerDownEvent(HandleInput);
+        inputManager.AddListenerOnPointerSecondDownEvent(HandleInputCameraPan);
+        inputManager.AddListenerOnPointerSecondUpEvent(HandleInputCameraStop);
         uiController.AddListenerOnBuildAreaEvent(StartPlacementMode);
         uiController.AddListenerOnCancleActionEvent(CancelAction);
+    }
+
+    private void HandleInputCameraStop()
+    {
+        cameraMovement.StopCameraMovement();
+    }
+
+    private void HandleInputCameraPan(Vector3 position)
+    {
+        if (buildingModeActive == false)
+        {
+            cameraMovement.MoveCamera(position);
+        }
     }
 
     private void HandleInput(Vector3 position)
