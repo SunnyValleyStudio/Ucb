@@ -3,6 +3,7 @@ using UnityEngine;
 
 public interface IInputManager
 {
+    LayerMask MouseInputMask { get; set; }
     void AddListenerOnPointerDownEvent(Action<Vector3> listener);
     void AddListenerOnPointerUpEvent(Action listener);
     void AddListenerOnPointerChangeEvent(Action<Vector3> listener);

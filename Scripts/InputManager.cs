@@ -14,7 +14,7 @@ public class InputManager : MonoBehaviour, IInputManager
 
     public LayerMask mouseInputMask;
 
-
+    public LayerMask MouseInputMask { get => mouseInputMask; set => mouseInputMask = value; }
     // Update is called once per frame
     void Update()
     {

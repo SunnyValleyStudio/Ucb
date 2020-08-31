@@ -19,7 +19,6 @@ namespace Tests
         {
             GameObject gameManagerObject = new GameObject();
             var camerMovementComponent = gameManagerObject.AddComponent<CameraMovement>();
-            gameManagerObject.AddComponent<InputManager>();
             uiController = gameManagerObject.AddComponent<UiController>();
             GameObject buttonBuildObject = new GameObject();
             GameObject cancleButtonObject = new GameObject();
@@ -28,6 +27,11 @@ namespace Tests
             var buttonBuildComponent = buttonBuildObject.AddComponent<Button>();
             uiController.buildResidentialAreaBtn = buttonBuildComponent;
             uiController.cancleActionPanel = cancleButtonObject;
+
+            uiController.buildingMenuPanel = canclePane;
+            uiController.openBuildMenuBtn = uiController.cancleActionBtn;
+            uiController.demolishBtn = uiController.cancleActionBtn;
+
             gameManagerComponent = gameManagerObject.AddComponent<GameManager>();
             gameManagerComponent.cameraMovement = camerMovementComponent;
             gameManagerComponent.uiController = uiController;
