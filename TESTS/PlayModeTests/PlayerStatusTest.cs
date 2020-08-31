@@ -43,10 +43,12 @@ namespace Tests
         {
             GameObject gameManagerObject = new GameObject();
             var camerMovementComponent = gameManagerObject.AddComponent<CameraMovement>();
+            gameManagerObject.AddComponent<ResourceManagerTestStud>();
 
             uiController = Substitute.For<UiController>();
 
             gameManagerComponent = gameManagerObject.AddComponent<GameManager>();
+            gameManagerComponent.resourceManagerGameObject = gameManagerObject;
             gameManagerObject.AddComponent<PlacementManager>();
             gameManagerComponent.placementManagerGameObject = gameManagerObject;
             gameManagerComponent.cameraMovement = camerMovementComponent;

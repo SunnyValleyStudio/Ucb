@@ -27,7 +27,8 @@ public class GameManager : MonoBehaviour
 
     public PlayerState State { get => state; }
 
-    public ResourceManager resourceManager;
+    public GameObject resourceManagerGameObject;
+    private IResourceManager resourceManager;
 
     private void Awake()
     {
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         placementManager = placementManagerGameObject.GetComponent<IPlacementManager>();
+        resourceManager = resourceManagerGameObject.GetComponent<IResourceManager>();
         PrepareStates();
         PreapreGameComponents();
         AssignInputListeners();
