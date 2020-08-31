@@ -36,8 +36,9 @@ public class ZonePlacementHelper : StructureModificationHelper
         Vector3Int maxPoint = Vector3Int.FloorToInt(endPosition);
 
         ZoneCalculator.PrepareStartAndEndPosition(startPosition, endPosition, ref minPoint, ref maxPoint, mapBottomLeftCorner);
-
-
+        HashSet<Vector3Int> newPositionsSet = grid.GetAllPositionsFromTo(minPoint, maxPoint);
+        previousEndPositon = endPosition;
+        ZoneCalculator.CalculateZone(newPositionsSet, structuresToBeModified, gameObjectsToReuse);
     }
 
 
