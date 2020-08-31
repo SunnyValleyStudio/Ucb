@@ -31,7 +31,7 @@ public class BuildingManager
 
     public void ConfirmPlacement()
     {
-        placementManager.ConfirmPlacement(structuresToBeModified.Values);
+        placementManager.PlaceStructuresOnTheMap(structuresToBeModified.Values);
         foreach (var keyValuePair in structuresToBeModified)
         {
             grid.PlaceStructureOnTheGrid(keyValuePair.Value, keyValuePair.Key);
@@ -41,7 +41,7 @@ public class BuildingManager
 
     public void CanclePlacement()
     {
-        placementManager.CancelPlacement(structuresToBeModified.Values);
+        placementManager.DestroyStructures(structuresToBeModified.Values);
         structuresToBeModified.Clear();
     }
 
@@ -51,7 +51,26 @@ public class BuildingManager
         Vector3 gridPosition = grid.CalculateGridPosition(inputPosition);
         if (grid.IsCellTaken(gridPosition))
         {
-            placementManager.RemoveBuilding(gridPosition, grid);
+            //placementManager.RemoveBuilding(gridPosition, grid);
+            var structure = grid.GetStructureFromTheGrid(gridPosition);
+            var gridPositionInt = Vector3Int.FloorToInt(gridPosition);
+            structuresToBeModified.Add(gridPositionInt, structure);
+            placementManager.SetBuildingForDemolition(structure);
         }
+    }
+
+    public void CancleDemolition()
+    {
+        this.placementManager.PlaceStructuresOnTheMap(structuresToBeModified.Values);
+        structuresToBeModified.Clear();
+    }
+
+    public void ConfirmDemolition()
+    {
+        foreach (var gridPosition in structuresToBeModified.Keys)
+        {
+            grid.RemoveStructureFromTheGrid(gridPosition);
+        }
+        structuresToBeModified.Clear();
     }
 }

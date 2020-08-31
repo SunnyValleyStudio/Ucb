@@ -21,6 +21,7 @@ public class PlayerBuildingZoneState : PlayerState
 
     public override void OnCancle()
     {
+        this.buildingManager.CanclePlacement();
         this.gameManager.TransitionToState(this.gameManager.selectionState, null);
     }
 
@@ -36,4 +37,16 @@ public class PlayerBuildingZoneState : PlayerState
         buildingManager.PlaceStructureAt(position, this.structureName, StructureType.Zone);
     }
 
+    public override void OnBuildSingleStructure(string structureName)
+    {
+        base.OnBuildSingleStructure(structureName);
+        this.buildingManager.CanclePlacement();
+    }
+
+    public override void OnBuildRoad(string structureName)
+    {
+
+        base.OnBuildRoad(structureName);
+        this.buildingManager.CanclePlacement();
+    }
 }

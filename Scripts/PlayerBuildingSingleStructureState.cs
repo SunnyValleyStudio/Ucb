@@ -21,6 +21,20 @@ public class PlayerBuildingSingleStructureState : PlayerState
         buildingManager.PlaceStructureAt(position, this.structureName, StructureType.SingleStructure);
     }
 
+    public override void OnBuildArea(string structureName)
+    {
+        
+        base.OnBuildArea(structureName);
+        this.buildingManager.CanclePlacement();
+    }
+
+    public override void OnBuildRoad(string structureName)
+    {
+        
+        base.OnBuildRoad(structureName);
+        this.buildingManager.CanclePlacement();
+    }
+
     public override void OnCancle()
     {
         this.buildingManager.CanclePlacement();

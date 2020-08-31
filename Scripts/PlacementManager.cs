@@ -41,7 +41,7 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    public void ConfirmPlacement(IEnumerable<GameObject> structureCollection)
+    public void PlaceStructuresOnTheMap(IEnumerable<GameObject> structureCollection)
     {
         foreach (var structure in structureCollection)
         {
@@ -56,7 +56,7 @@ public class PlacementManager : MonoBehaviour
         }
         originalMaterials.Clear();
     }
-    public void CancelPlacement(IEnumerable<GameObject> structureCollection) 
+    public void DestroyStructures(IEnumerable<GameObject> structureCollection) 
     {
         foreach (var structure in structureCollection)
         {
@@ -65,15 +65,19 @@ public class PlacementManager : MonoBehaviour
         originalMaterials.Clear();
     }
 
-    public void RemoveBuilding(Vector3 gridPosition, GridStructure grid)
+    //public void RemoveBuilding(Vector3 gridPosition, GridStructure grid)
+    //{
+    //    var structure = grid.GetStructureFromTheGrid(gridPosition);
+    //    if (structure != null)
+    //    {
+    //        Destroy(structure);
+    //        grid.RemoveStructureFromTheGrid(gridPosition);
+    //    }
+    //}
+
+    public void SetBuildingForDemolition(GameObject structureToDemolish)
     {
-        var structure = grid.GetStructureFromTheGrid(gridPosition);
-        if (structure != null)
-        {
-            Destroy(structure);
-            grid.RemoveStructureFromTheGrid(gridPosition);
-        }
+        Color colorToSet = Color.red;
+        ModifyStructurePrefabLook(structureToDemolish, colorToSet);
     }
-
-
 }

@@ -91,7 +91,7 @@ namespace Tests
             yield return new WaitForEndOfFrame(); //start
             gameManagerComponent.State.OnDemolishAction();
             yield return new WaitForEndOfFrame();
-            Assert.IsTrue(gameManagerComponent.State is PlayerRemoveBuildingState);
+            Assert.IsTrue(gameManagerComponent.State is PlayerDemolitionState);
 
         }
 
