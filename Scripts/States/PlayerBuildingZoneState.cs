@@ -34,7 +34,7 @@ public class PlayerBuildingZoneState : PlayerState
     public override void OnInputPointerDown(Vector3 position)
     {
 
-        buildingManager.PlaceStructureAt(position, this.structureName, StructureType.Zone);
+        buildingManager.PrepareStructureForPlacement(position, this.structureName, StructureType.Zone);
     }
 
     public override void OnBuildSingleStructure(string structureName)

@@ -45,35 +45,38 @@ public class PlacementManager : MonoBehaviour
     {
         foreach (var structure in structureCollection)
         {
-            foreach (Transform child in structure.transform)
-            {
-                var renderer = child.GetComponent<MeshRenderer>();
-                if (originalMaterials.ContainsKey(child.gameObject))
-                {
-                    renderer.materials = originalMaterials[child.gameObject];
-                }
-            }
-        }
-        originalMaterials.Clear();
-    }
-    public void DestroyStructures(IEnumerable<GameObject> structureCollection) 
-    {
-        foreach (var structure in structureCollection)
-        {
-            Destroy(structure);
+
+            ResetBuildingMaterial(structure);
+
         }
         originalMaterials.Clear();
     }
 
-    //public void RemoveBuilding(Vector3 gridPosition, GridStructure grid)
-    //{
-    //    var structure = grid.GetStructureFromTheGrid(gridPosition);
-    //    if (structure != null)
-    //    {
-    //        Destroy(structure);
-    //        grid.RemoveStructureFromTheGrid(gridPosition);
-    //    }
-    //}
+    public void ResetBuildingMaterial(GameObject structure)
+    {
+        foreach (Transform child in structure.transform)
+        {
+            var renderer = child.GetComponent<MeshRenderer>();
+            if (originalMaterials.ContainsKey(child.gameObject))
+            {
+                renderer.materials = originalMaterials[child.gameObject];
+            }
+        }
+    }
+
+    public void DestroyStructures(IEnumerable<GameObject> structureCollection)
+    {
+        foreach (var structure in structureCollection)
+        {
+            DestroySingleStructure(structure);
+        }
+        originalMaterials.Clear();
+    }
+
+    public void DestroySingleStructure(GameObject structure)
+    {
+        Destroy(structure);
+    }
 
     public void SetBuildingForDemolition(GameObject structureToDemolish)
     {
