@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
         inputManager.AddListenerOnPointerSecondDownEvent((position) => state.OnInputPanChange(position));
         inputManager.AddListenerOnPointerSecondUpEvent(() => state.OnInputPanUp());
         inputManager.AddListenerOnPointerChangeEvent((position) => state.OnInputPointerChange(position));
+        inputManager.AddListenerOnPointerUpEvent(() => state.OnInputPointerUp());
     }
 
 

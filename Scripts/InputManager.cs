@@ -30,7 +30,7 @@ public class InputManager : MonoBehaviour, IInputManager
             CallActionOnPointer((position) => OnPointerDownHandler?.Invoke(position));
 
         }
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             CallActionOnPointer((position) => OnPointerChangeHandler?.Invoke(position));
         }

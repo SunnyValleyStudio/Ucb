@@ -197,5 +197,22 @@ namespace Tests
         }
 
         #endregion
+
+        [Test]
+        public void GetAllPositionFromTo()
+        {
+
+            Vector3Int startPosition = new Vector3Int(0, 0, 0);
+            Vector3Int endPosition = new Vector3Int(6, 0, 3);
+
+            var returnValues = structure.GetAllPositionsFromTo(startPosition, endPosition);
+            Assert.IsTrue(returnValues.Count == 6);
+            Assert.IsTrue(returnValues.Contains(new Vector3Int(0, 0, 0)));
+            Assert.IsTrue(returnValues.Contains(new Vector3Int(3, 0, 0)));
+            Assert.IsTrue(returnValues.Contains(new Vector3Int(6, 0, 0)));
+            Assert.IsTrue(returnValues.Contains(new Vector3Int(0, 0, 3)));
+            Assert.IsTrue(returnValues.Contains(new Vector3Int(3, 0, 3)));
+            Assert.IsTrue(returnValues.Contains(new Vector3Int(6, 0, 3)));
+        }
     }
 }

@@ -45,10 +45,20 @@ public class PlayerBuildingZoneState : PlayerState
         this.buildingManager.CancelModification();
     }
 
+    public override void OnInputPointerChange(Vector3 position)
+    {
+        this.buildingManager.PrepareStructureForPlacement(position, structureName, StructureType.Zone);
+    }
+
     public override void OnBuildRoad(string structureName)
     {
 
         base.OnBuildRoad(structureName);
         this.buildingManager.CancelModification();
+    }
+
+    public override void OnInputPointerUp()
+    {
+        this.buildingManager.StopContinuousPlacement();
     }
 }

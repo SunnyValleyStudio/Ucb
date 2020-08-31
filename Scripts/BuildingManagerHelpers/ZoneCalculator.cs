@@ -8,7 +8,7 @@ public static class ZoneCalculator
     
     public static bool CheckIfPositionHasChanged(Vector3 gridPosition, Vector3 previousPosition, GridStructure grid)
     {
-        return Vector3Int.FloorToInt(gridPosition).Equals(Vector3Int.FloorToInt(previousPosition)) == false;
+        return Vector3Int.FloorToInt(grid.CalculateGridPosition(gridPosition)).Equals(Vector3Int.FloorToInt(grid.CalculateGridPosition(previousPosition))) == false;
     }
 
     public static void PrepareStartAndEndPosition(Vector3 startPosition, Vector3 endPosition, ref Vector3Int minPoint, ref Vector3Int maxPoint, Vector3 mapBottomLeftCorner)

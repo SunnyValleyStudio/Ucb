@@ -66,4 +66,9 @@ public class BuildingManager
         structureToReturn = helper.AccessStructureInDictionary(gridPosition);
         return structureToReturn;
     }
+
+    public void StopContinuousPlacement()
+    {
+        helper.StopContinuousPlacement();
+    }
 }

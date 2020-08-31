@@ -10,4 +10,5 @@ public interface IPlacementManager
     void ResetBuildingLook(GameObject structure);
     void SetBuildingForDemolition(GameObject structureToDemolish);
     GameObject PlaceStructureOnTheMap(Vector3 gridPosition, GameObject buildingPrefab, RotationValue rotationValue);
+    GameObject MoveStructureOnTheMap(Vector3Int positionToPlaceStructure, GameObject gameObjectToReuse, GameObject prefab);
 }

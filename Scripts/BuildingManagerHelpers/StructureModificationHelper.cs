@@ -55,4 +55,9 @@ public abstract class StructureModificationHelper
         structureData = null;
         structuresToBeModified.Clear();
     }
+
+    public virtual void StopContinuousPlacement()
+    {
+
+    }
 }
