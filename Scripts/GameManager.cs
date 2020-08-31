@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         buildingSingleStructureState = new PlayerBuildingSingleStructureState(this, buildingManager);
         demolishState = new PlayerRemoveBuildingState(this, buildingManager);
         state = selectionState;
-        state.EnterState();
+        state.EnterState(null);
 #if (UNITY_EDITOR && TEST) || !(UNITY_IOS || UNITY_ANDROID)
         inputManager = gameObject.AddComponent<InputManager>();
 #endif
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
 
     private void StartDemolishMode()
     {
-        TransitionToState(demolishState);
+        TransitionToState(demolishState, null);
     }
 
     private void HandlePointerChange(Vector3 position)
@@ -94,19 +94,19 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void StartPlacementMode()
+    private void StartPlacementMode(string variable)
     {
-        TransitionToState(buildingSingleStructureState);
+        TransitionToState(buildingSingleStructureState, variable);
     }
 
     private void CancelAction()
     {
         state.OnCancle();
     }
-    public void TransitionToState(PlayerState newState)
+    public void TransitionToState(PlayerState newState, string variable)
     {
         this.state = newState;
-        this.state.EnterState();
+        this.state.EnterState(variable);
     }
 
 }
