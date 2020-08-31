@@ -11,6 +11,7 @@ public class UiController : MonoBehaviour
     private Action OnCancleActionHandler;
     private Action OnDemolishActionHandler;
 
+    public StructureRepository structureRepository;
     public Button buildResidentialAreaBtn;
     public Button cancleActionBtn;
     public GameObject cancleActionPanel;
@@ -58,18 +59,27 @@ public class UiController : MonoBehaviour
 
     private void PrepareBuildMenu()
     {
-        CreateButtonsInPanel(zonesPanel.transform);
-        CreateButtonsInPanel(facilitiesPanel.transform);
-        CreateButtonsInPanel(roadsPanel.transform);
+        CreateButtonsInPanel(zonesPanel.transform, structureRepository.GetZoneNames());
+        CreateButtonsInPanel(facilitiesPanel.transform, structureRepository.GetSingleStructureNames());
+        CreateButtonsInPanel(roadsPanel.transform, new List<string>() { structureRepository.GetRoadStructureName() });
     }
 
-    private void CreateButtonsInPanel(Transform panelTransform)
+    private void CreateButtonsInPanel(Transform panelTransform, List<string> dataToShow)
     {
-        foreach (Transform child in panelTransform)
+        if (dataToShow.Count > panelTransform.childCount)
         {
-            var button = child.GetComponent<Button>();
-            if(button!= null)
+            int quantityDifference = dataToShow.Count - panelTransform.childCount;
+            for (int i = 0; i < quantityDifference; i++)
             {
+                Instantiate(buildButtonPrefab, panelTransform);
+            }
+        }
+        for (int i = 0; i < panelTransform.childCount; i++)
+        {
+            var button = panelTransform.GetChild(i).GetComponent<Button>();
+            if (button != null)
+            {
+                button.GetComponentInChildren<TextMeshProUGUI>().text = dataToShow[i];
                 button.onClick.AddListener(OnBuildAreaCallback);
             }
         }
