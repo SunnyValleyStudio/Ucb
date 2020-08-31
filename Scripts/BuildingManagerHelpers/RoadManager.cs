@@ -40,11 +40,6 @@ public static class RoadManager
         return structuresToBeModified.ContainsKey(neighbourPosition.Value);
     }
 
-    public static bool CheckDictionaryForRoadAtNeighbour(Vector3Int value, Dictionary<Vector3Int, GameObject> structuresToBeModified)
-    {
-        return structuresToBeModified.ContainsKey(value);
-    }
-
     internal static RoadStructureHelper CheckIfStraightRoadFits(int neighboursStatus, RoadStructureHelper roadToReturn, StructureBaseSO structureData)
     {
         if (neighboursStatus == ((int)Direction.Up | (int)Direction.Down) || neighboursStatus == (int)Direction.Up || neighboursStatus == (int)Direction.Down)

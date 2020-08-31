@@ -60,6 +60,7 @@ public class PlacementManager : MonoBehaviour, IPlacementManager
                 originalMaterials.Add(child.gameObject, renderer.materials);
             }
             Material[] materialsToSet = new Material[renderer.materials.Length];
+            colorToSet.a = 0.5f;
             for (int i = 0; i < materialsToSet.Length; i++)
             {
                 materialsToSet[i] = transparentMaterial;
