@@ -35,7 +35,7 @@ public abstract class StructureBaseSO : ScriptableObject
 
     public bool HasWater()
     {
-        return powerProvider != null;
+        return waterProvider != null;
     }
 
     public bool HasRoadAccess()

@@ -24,6 +24,7 @@ public class UIStructureInfoPanelHelper : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    //display all the data
     public void DisplayBasicStructureInfo(StructureBaseSO data)
     {
         Show();
