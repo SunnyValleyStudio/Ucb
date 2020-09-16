@@ -58,4 +58,14 @@ public class SingleFacilitySO : SingleStructureBaseSO
             }
         }
     }
+
+    public override IEnumerable<StructureBaseSO> PrepareForDestruction()
+    {
+        base.PrepareForDestruction();
+        foreach(var clientStructure in customers)
+        {
+            RemoveClient(clientStructure);
+        }
+        return customers;
+    }
 }

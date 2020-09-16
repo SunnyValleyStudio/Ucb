@@ -40,13 +40,20 @@ public class StructureEconomyManager : MonoBehaviour
     public static IEnumerable<StructureBaseSO> PrepareFacilityDemolition(Vector3Int gridPosition, GridStructure grid)
     {
         SingleFacilitySO faciltityData = (SingleFacilitySO)grid.GetStructureDataFromTheGrid(gridPosition);
-        return faciltityData.PrepareFacilityDestruction();
+        return faciltityData.PrepareForDestruction();
+    }
+
+    public static IEnumerable<StructureBaseSO> PrepareRoadDemolition(Vector3Int gridPosition, GridStructure grid)
+    {
+        RoadStructureSO roadData = (RoadStructureSO)grid.GetStructureDataFromTheGrid(gridPosition);
+        var structuresAroundRoad = grid.GetStructuresDataInRange(gridPosition, roadData.structureRange);
+        return roadData.PrepareRoadDemolition(structuresAroundRoad);
     }
 
     public static void PrepareStructureForDemolition(Vector3Int gridPosition, GridStructure grid)
     {
         var structureData = grid.GetStructureDataFromTheGrid(gridPosition);
-        structureData.PrepareStructureForDemolition();
+        structureData.PrepareForDestruction();
     }
     //what to do when single structure is placed
 

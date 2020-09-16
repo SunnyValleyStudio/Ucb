@@ -59,12 +59,13 @@ public abstract class StructureBaseSO : ScriptableObject
             powerProvider = facility;
     }
 
-    public void PrepareForDestruction()
+    public virtual IEnumerable<StructureBaseSO> PrepareForDestruction()
     {
         if (powerProvider != null)
             powerProvider.RemoveClient(this);
         if (waterProvider != null)
             waterProvider.RemoveClient(this);
+        return null;
     }
     public void AddWaterFacility(SingleFacilitySO facility)
     {
