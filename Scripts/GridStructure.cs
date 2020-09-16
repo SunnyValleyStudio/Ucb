@@ -35,9 +35,44 @@ public class GridStructure
         grid[cellIndex.y, cellIndex.x].RemoveStructure();
     }
 
+    internal IEnumerable<Vector3Int> GetStructurePositionsInRange(Vector3Int gridPosition, int range)
+    {
+        var cellIndex = CalculateGridIndex(gridPosition);
+        List<Vector3Int> listToReturn = new List<Vector3Int>();
+        if (CheckIndexValidity(cellIndex) == false)
+            return listToReturn;
+        for (int row = cellIndex.y - range; row <= cellIndex.y + range; row++)
+        {
+            for (int col = cellIndex.x - range; col <= cellIndex.x + range; col++)
+            {
+                var tempPosition = new Vector2Int(col, row);
+                if (CheckIndexValidity(tempPosition) && Vector2.Distance(cellIndex, tempPosition) <= range)
+                {
+                    var data = grid[row, col].GetStructureData();
+                    if (data != null)
+                    {
+                        listToReturn.Add(GetGridPositionFromIndex(tempPosition));
+                    }
+                }
+            }
+        }
+        return listToReturn;
+    }
+
+    internal bool ArePositionsInRange(Vector3Int gridPosition, Vector3Int structurePositionNearby, int range)
+    {
+        var distance = Vector2.Distance(CalculateGridIndex(gridPosition), CalculateGridIndex(structurePositionNearby));
+        return distance <= range;
+    }
+
     private Vector2Int CalculateGridIndex(Vector3 gridPosition)
     {
         return new Vector2Int((int)(gridPosition.x / cellSize), (int)(gridPosition.z / cellSize));
+    }
+
+    private Vector3Int GetGridPositionFromIndex(Vector2Int tempPosition)
+    {
+        return new Vector3Int(tempPosition.x * cellSize, 0, tempPosition.y * cellSize);
     }
 
     public IEnumerable<StructureBaseSO> GetAllStructures()

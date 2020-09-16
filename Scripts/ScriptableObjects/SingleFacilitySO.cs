@@ -56,11 +56,18 @@ public class SingleFacilitySO : SingleStructureBaseSO
     public override IEnumerable<StructureBaseSO> PrepareForDestruction()
     {
         base.PrepareForDestruction();
-        foreach(var clientStructure in customers)
+        List<StructureBaseSO> tempList = new List<StructureBaseSO>(customers);
+        foreach(var clientStructure in tempList)
         {
             RemoveClient(clientStructure);
         }
-        return customers;
+        customers.Clear();
+        return tempList;
+    }
+
+    internal bool IsFull()
+    {
+        return GetNumberOfCustomers() > maxCustomers;
     }
 
     public int GetNumberOfCustomers()

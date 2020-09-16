@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,17 +7,49 @@ public class StructureEconomyManager : MonoBehaviour
 {
     private static void PrepareNewStructure(Vector3Int gridPosition, GridStructure grid)
     {
-        var zoneData = grid.GetStructureDataFromTheGrid(gridPosition);
-        var structuresAroundZoneStructure = grid.GetStructuresDataInRange(gridPosition, zoneData.structureRange);
+        var structureData = grid.GetStructureDataFromTheGrid(gridPosition);
+        var structuresAroundZoneStructure = grid.GetStructuresDataInRange(gridPosition, structureData.structureRange);
         //adds roads
-        zoneData.PreareStructure(structuresAroundZoneStructure);
+        structureData.PreareStructure(structuresAroundZoneStructure);
     }
 
     //what to do when zone structure is placed
     public static void PrepareZoneStructure(Vector3Int gridPosition, GridStructure grid)
     {
         PrepareNewStructure(gridPosition, grid);
+        ZoneStructureSO zoneData = (ZoneStructureSO)grid.GetStructureDataFromTheGrid(gridPosition);
+        if (DoesStructureRequireAnyResource(zoneData))
+        {
+            var structuresAroundPositions = grid.GetStructurePositionsInRange(gridPosition, zoneData.maxFacilitySearchRange);
+            foreach (var structurePositionNearby in structuresAroundPositions)
+            {
+                var data = grid.GetStructureDataFromTheGrid(structurePositionNearby);
+                if (data.GetType() == typeof(SingleFacilitySO))
+                {
+                    SingleFacilitySO facility = (SingleFacilitySO)data;
+                    if ((facility.facilityType == FacilityType.Power && zoneData.HasPower() == false && zoneData.requirePower)
+                        || (facility.facilityType == FacilityType.Water && zoneData.HasWater() == false && zoneData.requireWater))
+                    {
+                        if (grid.ArePositionsInRange(gridPosition, structurePositionNearby, facility.singleStructureRange))
+                        {
+                            if (facility.IsFull() == false)
+                            {
+                                facility.AddClients(new StructureBaseSO[] { zoneData });
+                                if (DoesStructureRequireAnyResource(zoneData) == false)
+                                {
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
+    private static bool DoesStructureRequireAnyResource(ZoneStructureSO zoneData)
+    {
+        return (zoneData.requirePower && zoneData.HasPower() == false) || (zoneData.requireWater && zoneData.HasWater() == false);
     }
 
     //what to do when road is placed
@@ -30,7 +63,7 @@ public class StructureEconomyManager : MonoBehaviour
 
     public static void PrepareFacilityStructure(Vector3Int gridPosition, GridStructure grid)
     {
-        PrepareZoneStructure(gridPosition, grid);
+        PrepareNewStructure(gridPosition, grid);
 
         SingleFacilitySO faciltityData = (SingleFacilitySO)grid.GetStructureDataFromTheGrid(gridPosition);
         var structuresAroundFacility = grid.GetStructuresDataInRange(gridPosition, faciltityData.singleStructureRange);

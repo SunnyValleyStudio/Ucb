@@ -203,6 +203,7 @@ namespace Tests
             residentialZone.requirePower = true;
             residentialZone.requireWater = true;
             residentialZone.upkeepCost = 30;
+            residentialZone.maxFacilitySearchRange = 2;
             return residentialZone;
         }
     }
