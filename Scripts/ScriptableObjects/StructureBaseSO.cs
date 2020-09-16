@@ -88,7 +88,7 @@ public abstract class StructureBaseSO : ScriptableObject
     }
     private void AddRoadProvider(IEnumerable<StructureBaseSO> structures)
     {
-        if (roadProvider == null)
+        if (roadProvider != null)
             return;
         foreach (var nearbyStructure in structures)
         {
