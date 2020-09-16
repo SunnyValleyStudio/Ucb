@@ -137,7 +137,7 @@ public static class RoadManager
             placementManager.DestroySingleStructure(keyValuePair.Value);
             var roadStructure = GetCorrectRoadPrefab(keyValuePair.Key, structureData, structuresToBeModified, grid);
             var structure = placementManager.PlaceStructureOnTheMap(keyValuePair.Key, roadStructure.RoadPrefab, roadStructure.RoadPrefabRotation);
-            grid.PlaceStructureOnTheGrid(structure, keyValuePair.Key, structureData);
+            grid.PlaceStructureOnTheGrid(structure, keyValuePair.Key, GameObject.Instantiate(structureData));
         }
         neighboursDictionar.Clear();
     }

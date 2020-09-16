@@ -32,12 +32,6 @@ public class SingleFacilitySO : SingleStructureBaseSO
         return customers.Count * income;
     }
 
-    public enum FacilityType
-    {
-        Power,
-        Water,
-        None
-    }
 
     internal void AddClients(IEnumerable<StructureBaseSO> structuresAroundFacility)
     {
@@ -68,4 +62,17 @@ public class SingleFacilitySO : SingleStructureBaseSO
         }
         return customers;
     }
+
+    public int GetNumberOfCustomers()
+    {
+        return customers.Count;
+    }
+}
+
+
+public enum FacilityType
+{
+    Power,
+    Water,
+    None
 }
