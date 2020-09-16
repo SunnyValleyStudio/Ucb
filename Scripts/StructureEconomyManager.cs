@@ -88,7 +88,36 @@ public class StructureEconomyManager : MonoBehaviour
         var structureData = grid.GetStructureDataFromTheGrid(gridPosition);
         structureData.PrepareForDestruction();
     }
-    //what to do when single structure is placed
 
-    //what to do when structure is deleted
+    public static void CreateStructureLogic(Type structureType, Vector3Int gridPosition, GridStructure grid)
+    {
+        if (structureType == typeof(ZoneStructureSO))
+        {
+            PrepareZoneStructure(gridPosition, grid);
+        }
+        else if (structureType == typeof(RoadStructureSO))
+        {
+            PrepareRoadStructure(gridPosition, grid);
+        }
+        else if (structureType == typeof(SingleFacilitySO))
+        {
+            PrepareFacilityStructure(gridPosition, grid);
+        }
+    }
+
+    public static void DemolitionStructureLogic(Type structureType, Vector3Int gridPosition, GridStructure grid)
+    {
+        if (structureType == typeof(ZoneStructureSO))
+        {
+            PrepareStructureForDemolition(gridPosition, grid);
+        }
+        else if (structureType == typeof(RoadStructureSO))
+        {
+            PrepareRoadDemolition(gridPosition, grid);
+        }
+        else if (structureType == typeof(SingleFacilitySO))
+        {
+            PrepareFacilityDemolition(gridPosition, grid);
+        }
+    }
 }

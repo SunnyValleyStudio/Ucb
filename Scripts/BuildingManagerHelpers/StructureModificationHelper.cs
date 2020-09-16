@@ -38,18 +38,7 @@ public abstract class StructureModificationHelper
         foreach (var keyValuePair in structuresToBeModified)
         {
             grid.PlaceStructureOnTheGrid(keyValuePair.Value, keyValuePair.Key, GameObject.Instantiate(structureData) );
-            if (structureType == typeof(ZoneStructureSO))
-            {
-                StructureEconomyManager.PrepareZoneStructure(keyValuePair.Key, grid);
-            }
-            else if (structureType == typeof(RoadStructureSO))
-            {
-                StructureEconomyManager.PrepareRoadStructure(keyValuePair.Key, grid);
-            }
-            else if (structureType == typeof(SingleFacilitySO))
-            {
-                StructureEconomyManager.PrepareFacilityStructure(keyValuePair.Key, grid);
-            }
+            StructureEconomyManager.CreateStructureLogic(structureType, keyValuePair.Key, grid);
         }
         ResetHelpersData();
     }

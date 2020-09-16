@@ -47,10 +47,13 @@ public class StructureDemolitionHelper : StructureModificationHelper
         var data = grid.GetStructureDataFromTheGrid(gridPosition);
         if (data != null)
         {
-            if (data.GetType() == typeof(ZoneStructureSO) && ((ZoneStructureSO)data).zoneType == ZoneType.Residential)
+            Type dataType = data.GetType();
+            if (dataType == typeof(ZoneStructureSO) && ((ZoneStructureSO)data).zoneType == ZoneType.Residential)
             {
                 resourceManager.ReducePopulation(1);
             }
+            StructureEconomyManager.DemolitionStructureLogic(dataType, gridPosition, grid);
+
         }
     }
 
