@@ -38,4 +38,24 @@ public class SingleFacilitySO : SingleStructureBaseSO
         Water,
         None
     }
+
+    internal void AddClients(IEnumerable<StructureBaseSO> structuresAroundFacility)
+    {
+        foreach (var nearbyStructure in structuresAroundFacility)
+        {
+            if (maxCustomers > customers.Count && nearbyStructure != this)
+            {
+                if (facilityType == FacilityType.Water && nearbyStructure.requireWater)
+                {
+                    nearbyStructure.AddWaterFacility(this);
+                    customers.Add(nearbyStructure);
+                }
+                if (facilityType == FacilityType.Power && nearbyStructure.requirePower)
+                {
+                    nearbyStructure.AddPowerFacility(this);
+                    customers.Add(nearbyStructure);
+                }
+            }
+        }
+    }
 }
